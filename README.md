@@ -12,4 +12,4 @@ by the GitHub ID of the person who supplied it followed by `.v` to identify it a
 language file.
 
 If you have a solution that is more complex than a single `.v` file, make a subdir with
-your GitHub ID, and place all files there.
+your GitHub ID under the appropriate year/day subdir, and place all files there.
