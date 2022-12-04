@@ -1,5 +1,5 @@
 import os
-import arrays { sum, chunk }
+import arrays { chunk, sum }
 
 const offset = 96
 
@@ -35,8 +35,10 @@ fn process_rucksack(rucksack string) int {
 }
 
 fn find_badge_prio(rucksack_group []string) int {
-	for b in rucksack_group[0] {
-		if rucksack_group[1].contains(b.ascii_str()) && rucksack_group[2].contains(b.ascii_str()) {
+	first, second, third := rucksack_group[0], rucksack_group[1], rucksack_group[2]
+
+	for b in first {
+		if second.contains(b.ascii_str()) && third.contains(b.ascii_str()) {
 			// println('badge: ${b.ascii_str()} ->  b:${b} convert:${convert_prio(b)}')
 			return convert_prio(b)
 		}
