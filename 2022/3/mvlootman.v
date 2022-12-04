@@ -1,5 +1,5 @@
 import os
-import arrays { sum }
+import arrays { sum, chunk }
 
 const offset = 96
 
@@ -8,10 +8,7 @@ fn main() {
 
 	part1 := sum(rucksacks.map(process_rucksack))!
 
-	mut groups_of_three := [][]string{}
-	for i in 0 .. rucksacks.len / 3 {
-		groups_of_three << [rucksacks[i * 3 + 0], rucksacks[i * 3 + 1], rucksacks[i * 3 + 2]]
-	}
+	mut groups_of_three := chunk(rucksacks, 3)
 	part2 := sum(groups_of_three.map(find_badge_prio(it)))!
 
 	println('Part 1: ${part1}\nPart 2: ${part2}')
