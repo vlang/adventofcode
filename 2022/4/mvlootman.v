@@ -22,10 +22,10 @@ fn is_partial_overlap(item [][]int) bool {
 
 	/*
 	A	|-----|
-B |-----|
+	B |-----|
 
-A	|-----|
-B      |-----|
+	A	|-----|
+	B      |-----|
 	*/
 	return (b_end >= a_start && b_start <= a_start) || (b_start <= a_end && a_start <= b_start)
 }
