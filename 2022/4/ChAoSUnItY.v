@@ -50,6 +50,7 @@ fn intersection(arrays ...[]int) ![]int {
 fn process_data(data string) [][][]int {
 	return data.replace('\r\n', '\n')
 		.split('\n')
+		.filter(it != '')
 		.map(fn (line string) [][]int {
 			return line.split(',')
 				.map(fn (range string) []int {

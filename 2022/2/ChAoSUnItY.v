@@ -90,6 +90,9 @@ fn process_data1(data string) [][]Response {
 	mut result := [][]Response{}
 
 	for line in data.replace('\r\n', '\n').split('\n') {
+		if line == '' {
+			continue
+		}
 		unsafe {
 			result << [Response(line[0] - 65), Response(line[2] - 88)]
 		}
@@ -102,6 +105,9 @@ fn process_data2(data string) []Strategy {
 	mut result := []Strategy{}
 
 	for line in data.replace('\r\n', '\n').split('\n') {
+		if line == '' {
+			continue
+		}
 		unsafe {
 			result << Strategy{Response(line[0] - 65), Predict(line[2] - 88)}
 		}

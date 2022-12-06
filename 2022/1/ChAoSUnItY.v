@@ -9,11 +9,11 @@ fn main() {
 	println(part2(data)!)
 }
 
-fn part1() !int {
+fn part1(data []int) !int {
 	return max(data)!
 }
 
-fn part2() !int {
+fn part2(data []int) !int {
 	return sum(data[0..3])!
 }
 
