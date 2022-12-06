@@ -9,7 +9,6 @@ const wd = os.getwd()
 const vexe = @VEXE
 
 const skip_list = [
-	'2022/5/ChAoSUnItY.v',
 	'do_not_delete',
 ]
 
