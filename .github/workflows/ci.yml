@@ -28,4 +28,4 @@ jobs:
           path: aoc
 
       - name: Run verify.v
-        run: v run verify.v
+        run: cd aoc && v run verify.v
