@@ -22,9 +22,17 @@ fn vrun(v_file string) !string {
 	return res.output
 }
 
+fn v_file2out_file(v_file string) string {
+	return os.real_path(os.join_path(wd, 'known_outputs', v_file.replace('/', '_').replace('.v',
+		'.out')))
+}
+
+fn v_file2relative_out_file(v_file string) string {
+	return v_file2out_file(v_file).replace(wd + '/', '')
+}
+
 fn vout(v_file string, output string) !string {
-	local_file_name := os.file_name(v_file)
-	out_file := local_file_name.replace('.v', '.out')
+	out_file := v_file2out_file(v_file)
 	if !os.exists(out_file) {
 		eprintln('> .out file for ${v_file} does not exist, creating it based on the current run output...')
 		os.write_file(out_file, output)!
@@ -43,7 +51,7 @@ fn main() {
 		os.chdir(wd)!
 		vdir := os.dir(v_file)
 		os.chdir(vdir)!
-		println('> checking ${v_file} ...')
+		println('> checking ${v_file:-25} with ${v_file2relative_out_file(v_file):-35} ...')
 		output := vrun(v_file)!
 		known := vout(v_file, output)!
 		if output != known {
