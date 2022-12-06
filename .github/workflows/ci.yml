@@ -7,7 +7,7 @@ on:
     - cron: '31 1,12 * * *'
 
 jobs:
-  ubuntu:
+  works-on-latest-v-and-ubuntu:
     runs-on: ubuntu-latest
     steps:
 
