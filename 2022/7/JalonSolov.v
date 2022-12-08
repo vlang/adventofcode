@@ -2,11 +2,11 @@ import os
 
 const (
 	c100k = 100_000
-	c70b = 70_000_000
-	c30b = 30_000_000
+	c70m = 70_000_000
+	c30m = 30_000_000
 )
 
-mut dir_sizes := map[string]i64{}
+mut dir_sizes := map[string]int{}
 mut curdir := ''
 
 lines := os.read_lines('filesystem.input')!
@@ -30,7 +30,7 @@ for l in lines {
 			// ignore
 		}
 		else {
-			size := l.i64()
+			size := l.int()
 			mut key := curdir
 			for {
 				dir_sizes[key] += size
@@ -45,18 +45,18 @@ for l in lines {
 	}
 }
 
-mut total := i64(0)
-unused := c70b - dir_sizes['/']
-mut values := dir_sizes.values().filter(it + unused >= c30b)
+mut total := int(0)
+unused := c70m - dir_sizes['/']
+mut values := dir_sizes.values().filter(it <= c100k)
 
-values.sort(b > a)
-
-for _, val in dir_sizes {
-	if val <= c100k {
-		total += val
-	}
+for val in values {
+	total += val
 }
 
 println(total)
+
+values = dir_sizes.values().filter(it + unused >= c30m)
+
+values.sort()
 
 println(values[0])
