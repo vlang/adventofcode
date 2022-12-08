@@ -1,4 +1,5 @@
 import os
+import arrays
 
 const (
 	c100k = 100_000
@@ -45,16 +46,11 @@ for l in lines {
 	}
 }
 
-mut total := int(0)
-unused := c70m - dir_sizes['/']
 mut values := dir_sizes.values().filter(it <= c100k)
 
-for val in values {
-	total += val
-}
+println(arrays.sum(values) or {0})
 
-println(total)
-
+unused := c70m - dir_sizes['/']
 values = dir_sizes.values().filter(it + unused >= c30m)
 
 values.sort()
