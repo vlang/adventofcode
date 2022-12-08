@@ -23,8 +23,7 @@ fn vrun(v_file string) !string {
 }
 
 fn v_file2out_file(v_file string) string {
-	return os.real_path(os.join_path(wd, 'known_outputs', v_file.replace('/', '_').replace('.v',
-		'.out')))
+	return os.real_path(os.join_path(wd, 'known_outputs', v_file.replace('.v', '.out')))
 }
 
 fn v_file2relative_out_file(v_file string) string {
@@ -35,6 +34,7 @@ fn vout(v_file string, output string) !string {
 	out_file := v_file2out_file(v_file)
 	if !os.exists(out_file) {
 		eprintln('> .out file for ${v_file} does not exist, creating it based on the current run output...')
+		os.mkdir_all(os.dir(out_file))!
 		os.write_file(out_file, output)!
 	}
 	return os.read_file(out_file)!
