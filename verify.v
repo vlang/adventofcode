@@ -41,7 +41,10 @@ fn vout(v_file string, output string) !string {
 }
 
 fn main() {
-	mut v_files := os.walk_ext('2022', '.v')
+	mut v_files := []string{}
+	for folder in 2015 .. 2050 {
+		v_files << os.walk_ext(folder.str(), '.v')
+	}
 	v_files.sort()
 	for v_file in v_files {
 		if v_file in skip_list {
