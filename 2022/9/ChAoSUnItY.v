@@ -95,7 +95,7 @@ fn traverse(data []Instruction, len int) int {
 }
 
 fn process_data(data string) []Instruction {
-	return data.replace('\r\n', '\n').split('\n').map(fn (line string) Instruction {
+	return data.replace('\r\n', '\n').split('\n').filter(it != '').map(fn (line string) Instruction {
 		line_segment := line.split(' ')
 		return Instruction{
 			direction: line_segment[0][0]
