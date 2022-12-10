@@ -13,6 +13,7 @@ struct Pos {
 	y int
 }
 
+// https://github.com/hillerstorm/aoc2022-v/blob/main/days/day_09.v
 fn main() {
 	moves_part_one := read_lines('ropes-part1.input')!.map(it.split(' '))
 	moves_part_two := read_lines('ropes-part2.input')!.map(it.split(' '))

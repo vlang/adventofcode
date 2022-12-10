@@ -2,6 +2,7 @@ import arrays { flatten }
 import math { floor, max }
 import os { read_file }
 
+// https://github.com/hillerstorm/aoc2022-v/blob/main/days/day_08.v
 fn main() {
 	lines := read_file('trees.input')!.trim_space().split_into_lines()
 	size := lines.len
