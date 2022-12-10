@@ -16,15 +16,15 @@ your GitHub ID under the appropriate year/day subdir, and place all files there.
 
 ## Input file format
 
-1, Input file should end with file extension `.input`
-2, Input file should be directly copied/pasted from AoC's example input with the following 
+1. Input file should end with file extension `.input`  
+2. Input file should be directly copied/pasted from AoC's example input with the following 
 standard:
 - - No whitespace trimming (see note 1)
 - - No additional empty line
 - - No personal-specific input allowed in example input file
-3, If there are multiple example inputs for different parts in a day, suffix different 
-input file with `-partX` where X is part number, then follow other citeria
-4, Input file's name should relate to the corresponding AoC problem, for example: AoC 2022
+3. If there are multiple example inputs for different parts in a day, suffix different 
+input file with `-partX` where X is part number, then follow other citeria  
+4. Input file's name should relate to the corresponding AoC problem, for example: AoC 2022
 Day 7 relates to unix system's file system cmd operations, therefore, you should
 name it with`filesystem.input` or `cmd.input`
 
