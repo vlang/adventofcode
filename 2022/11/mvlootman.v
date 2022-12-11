@@ -16,8 +16,6 @@ mut:
 	inspect_count i64
 }
 
-const write_log = false
-
 fn main() {
 	part1 := solve(20, true)!
 	part2 := solve(10_000, false)!
@@ -125,10 +123,11 @@ fn parse_monkey(monkey_lines []string) Monkey {
 	}
 }
 
+// only execute the log() calls when flag is set e.g.
+// v -d write_log mvlootman.v
+[if write_log ?]
 fn log(s string) {
-	if write_log {
-		println(s)
-	}
+	println(s)
 }
 
 fn print_monkey_items(monkeys []Monkey) {
