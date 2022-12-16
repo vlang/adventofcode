@@ -10,15 +10,16 @@ jobs:
   works-on-latest-v-and-ubuntu:
     runs-on: ubuntu-latest
     steps:
-
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install colordiff
+
       - name: Checkout V
         uses: actions/checkout@v2
         with:
           repository: vlang/v
+
       - name: Build V
         run: make && ./v symlink -githubci
 

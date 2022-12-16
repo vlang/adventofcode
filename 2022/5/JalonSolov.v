@@ -21,7 +21,7 @@ for l in lines {
 		src = l[11 + count.str().len..].int() - 1
 		dest = l[15 + count.str().len + src.str().len..].int() - 1
 
-		for i in 0..count {
+		for i in 0 .. count {
 			stacks[dest].insert(0, stacks[src][i])
 		}
 		stacks[src] = stacks[src][count..]
@@ -36,8 +36,8 @@ for l in lines {
 
 			match c {
 				`A`...`Z` {
-					stacks[int(offset/4)] << c
-					stacks2[int(offset/4)] << c
+					stacks[int(offset / 4)] << c
+					stacks2[int(offset / 4)] << c
 				}
 				`0`...`9` {
 					break

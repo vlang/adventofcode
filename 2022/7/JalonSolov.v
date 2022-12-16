@@ -3,8 +3,8 @@ import arrays
 
 const (
 	c100k = 100_000
-	c70m = 70_000_000
-	c30m = 30_000_000
+	c70m  = 70_000_000
+	c30m  = 30_000_000
 )
 
 mut dir_sizes := map[string]int{}
@@ -48,7 +48,7 @@ for l in lines {
 
 mut values := dir_sizes.values().filter(it <= c100k)
 
-println(arrays.sum(values) or {0})
+println(arrays.sum(values) or { 0 })
 
 unused := c70m - dir_sizes['/']
 values = dir_sizes.values().filter(it + unused >= c30m)

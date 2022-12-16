@@ -11,8 +11,8 @@ for l in lines {
 	badge_lines[current_badge_line] = l
 	current_badge_line++
 
-	h1 := l[..l.len/2].bytes()
-	h2 := l[l.len/2..].bytes()
+	h1 := l[..l.len / 2].bytes()
+	h2 := l[l.len / 2..].bytes()
 
 	for b in h1 {
 		if b in h2 {
