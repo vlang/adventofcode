@@ -2,11 +2,18 @@ import os
 
 lines := os.read_lines('trees.input')!
 
+// width and height are the same in this case, but it's good general practice
+// to use separate variables
 grid_height := lines.len
 grid_width := lines[0].len
+
+// grid is a 2-dimensional array for the input
 mut grid := [][]u8{len: grid_height, init: []u8{cap: grid_width}}
+// grid_r90 is the same array, rotated 90 degrees right
 mut grid_r90 := [][]u8{len: grid_width, init: []u8{cap: grid_height}}
+// trees around the perimeter are automatically visible - no need to process them
 mut visible_trees := (grid_width * 2) + ((grid_height - 2) * 2)
+// keep track of best scenic view, for part 2
 mut best_view := 0
 
 for idx, l in lines {
@@ -37,7 +44,6 @@ println(visible_trees)
 
 for row in 0 .. grid_height - 1 {
 	for col in 0 .. grid_width - 1 {
-		mut view_score := 1
 		current_tree_height := grid[row][col]
 
 		mut left := 0
@@ -76,7 +82,7 @@ for row in 0 .. grid_height - 1 {
 			}
 		}
 
-		view_score = left * right * up * down
+		view_score := left * right * up * down
 
 		if view_score > best_view {
 			best_view = view_score
