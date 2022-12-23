@@ -1,6 +1,7 @@
 import os
 import v.util.diff
 import rand
+import time
 
 const diff_cmd = diff.find_working_diff_command() or { '' }
 
@@ -12,14 +13,16 @@ const skip_list = [
 	'do_not_delete',
 ]
 
-fn vrun(v_file string) !string {
+fn vrun(v_file string) !(string, time.Duration) {
 	local_file_name := os.file_name(v_file)
 	vdir := os.dir(v_file)
+	sw := time.new_stopwatch()
 	res := os.execute('${vexe} run ${local_file_name}')
+	took := sw.elapsed()
 	if res.exit_code != 0 {
 		return error('could not: `v run ${local_file_name}` in working folder: "${vdir}"')
 	}
-	return res.output
+	return res.output, took
 }
 
 fn v_file2out_file(v_file string) string {
@@ -41,12 +44,17 @@ fn vout(v_file string, output string) !string {
 }
 
 fn main() {
+	glob_pattern := '*' + os.args[1] or { '' } + '*'
 	mut v_files := []string{}
 	for folder in 2015 .. 2050 {
 		v_files << os.walk_ext(folder.str(), '.v')
 	}
 	v_files.sort()
 	for v_file in v_files {
+		if glob_pattern != '**' && !v_file.match_glob(glob_pattern) {
+			// eprintln('> skipping non matching ${v_file:-30} for glob pattern: `${glob_pattern}`')
+			continue
+		}
 		if v_file in skip_list {
 			eprintln('> skipping known failing ${v_file} ...')
 			continue
@@ -54,8 +62,11 @@ fn main() {
 		os.chdir(wd)!
 		vdir := os.dir(v_file)
 		os.chdir(vdir)!
-		println('> checking ${v_file:-25} with ${v_file2relative_out_file(v_file):-35} ...')
-		output := vrun(v_file)!
+		print('> checking ${v_file:-25} with ${v_file2relative_out_file(v_file):-40} ...')
+		flush_stdout()
+		output, took := vrun(v_file)!
+		println(' took ${took.milliseconds()} ms')
+		flush_stdout()
 		known := vout(v_file, output)!
 		if output != known {
 			eprintln('current output does not match the known one:')
