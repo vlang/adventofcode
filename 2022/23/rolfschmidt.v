@@ -58,6 +58,7 @@ fn solve(part2 bool) int {
 				for rule_pos in pos_list {
 					if grid[add(pos, rule_pos).str()] {
 						any_match = true
+						break
 					}
 				}
 				if any_match {
