@@ -117,6 +117,4 @@ fn solve (part2 bool) int {
 fn main() {
 	println(solve(false))
 	println(solve(true))
-
-	return
 }
