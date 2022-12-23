@@ -1,7 +1,7 @@
 import os
 import arrays
 
-fn solve (part2 bool) int {
+fn solve(part2 bool) int {
 	input := os.read_file('23.in') or { '' }
 	mut grid := map[string]bool{}
 
@@ -18,23 +18,23 @@ fn solve (part2 bool) int {
 	mut rules_ordered := ['north', 'south', 'west', 'east']
 
 	mut rules := {
-		'north': [ [-1, -1], [0, -1], [1, -1] ],
-		'south': [ [-1, 1], [0, 1], [1, 1] ],
-		'west':  [ [-1, -1], [-1, 0], [-1, 1] ],
-		'east':  [ [1, -1], [1, 0], [1, 1] ],
+		'north': [[-1, -1], [0, -1], [1, -1]]
+		'south': [[-1, 1], [0, 1], [1, 1]]
+		'west':  [[-1, -1], [-1, 0], [-1, 1]]
+		'east':  [[1, -1], [1, 0], [1, 1]]
 	}
 
 	mut move_to := {
-		'north': [ 0, -1 ],
-		'south': [ 0, 1 ],
-		'west':  [ -1, 0 ],
-		'east':  [ 1, 0 ],
+		'north': [0, -1]
+		'south': [0, 1]
+		'west':  [-1, 0]
+		'east':  [1, 0]
 	}
 
-	add := fn(x []int, y []int) []int {
+	add := fn (x []int, y []int) []int {
 		return [x[0] + y[0], x[1] + y[1]]
 	}
-	str2pos := fn(x string) []int {
+	str2pos := fn (x string) []int {
 		return x.replace('[', '').replace(']', '').split(', ').map(it.int())
 	}
 
@@ -65,7 +65,9 @@ fn solve (part2 bool) int {
 				}
 			}
 
-			if checks.len < 1 { continue }
+			if checks.len < 1 {
+				continue
+			}
 
 			for name in rules_ordered {
 				if !checks[name] {
@@ -79,7 +81,9 @@ fn solve (part2 bool) int {
 		}
 
 		for to, froms in moves {
-			if froms.len > 1 { continue }
+			if froms.len > 1 {
+				continue
+			}
 
 			pos := froms.first()
 			grid.delete(pos.str())
@@ -98,15 +102,17 @@ fn solve (part2 bool) int {
 		return round
 	}
 
-    minx := arrays.min(grid.keys().map(str2pos(it)[0])) or { 0 }
-    maxx := arrays.max(grid.keys().map(str2pos(it)[0])) or { 0 }
-    miny := arrays.min(grid.keys().map(str2pos(it)[1])) or { 0 }
-    maxy := arrays.max(grid.keys().map(str2pos(it)[1])) or { 0 }
+	minx := arrays.min(grid.keys().map(str2pos(it)[0])) or { 0 }
+	maxx := arrays.max(grid.keys().map(str2pos(it)[0])) or { 0 }
+	miny := arrays.min(grid.keys().map(str2pos(it)[1])) or { 0 }
+	maxy := arrays.max(grid.keys().map(str2pos(it)[1])) or { 0 }
 
 	mut result := 0
 	for y := miny; y <= maxy; y++ {
 		for x := minx; x <= maxx; x++ {
-			if grid[[x, y].str()] { continue }
+			if grid[[x, y].str()] {
+				continue
+			}
 
 			result++
 		}
