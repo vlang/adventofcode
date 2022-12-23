@@ -17,22 +17,24 @@ fn solve (part2 bool) int {
 
 	mut rules_ordered := ['north', 'south', 'west', 'east']
 
-	mut rules := map[string][][]int{}
-	rules['north'] = [ [-1, -1], [0, -1], [1, -1] ]
-	rules['south'] = [ [-1, 1], [0, 1], [1, 1] ]
-	rules['west']  = [ [-1, -1], [-1, 0], [-1, 1] ]
-	rules['east']  = [ [1, -1], [1, 0], [1, 1] ]
+	mut rules := {
+		'north': [ [-1, -1], [0, -1], [1, -1] ],
+		'south': [ [-1, 1], [0, 1], [1, 1] ],
+		'west':  [ [-1, -1], [-1, 0], [-1, 1] ],
+		'east':  [ [1, -1], [1, 0], [1, 1] ],
+	}
 
-	mut move_to := map[string][]int{}
-	move_to['north'] = [ 0, -1 ]
-	move_to['south'] = [ 0, 1 ]
-	move_to['west']  = [ -1, 0 ]
-	move_to['east']  = [ 1, 0 ]
+	mut move_to := {
+		'north': [ 0, -1 ],
+		'south': [ 0, 1 ],
+		'west':  [ -1, 0 ],
+		'east':  [ 1, 0 ],
+	}
 
 	add := fn(x []int, y []int) []int {
 		return [x[0] + y[0], x[1] + y[1]]
 	}
-	strpos := fn(x string) []int {
+	str2pos := fn(x string) []int {
 		return x.replace('[', '').replace(']', '').split(', ').map(it.int())
 	}
 
@@ -48,7 +50,7 @@ fn solve (part2 bool) int {
 		round++
 
 		for pos_str in grid.keys() {
-			pos := strpos(pos_str)
+			pos := str2pos(pos_str)
 
 			mut checks := map[string]bool{}
 			for name, pos_list in rules {
@@ -97,10 +99,10 @@ fn solve (part2 bool) int {
 	}
 
 	// keys := grid.keys
-    minx := arrays.min(grid.keys().map(strpos(it)[0])) or { 0 }
-    maxx := arrays.max(grid.keys().map(strpos(it)[0])) or { 0 }
-    miny := arrays.min(grid.keys().map(strpos(it)[1])) or { 0 }
-    maxy := arrays.max(grid.keys().map(strpos(it)[1])) or { 0 }
+    minx := arrays.min(grid.keys().map(str2pos(it)[0])) or { 0 }
+    maxx := arrays.max(grid.keys().map(str2pos(it)[0])) or { 0 }
+    miny := arrays.min(grid.keys().map(str2pos(it)[1])) or { 0 }
+    maxy := arrays.max(grid.keys().map(str2pos(it)[1])) or { 0 }
 
 	mut result := 0
 	for y := miny; y <= maxy; y++ {
