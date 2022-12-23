@@ -48,7 +48,7 @@ fn day15b() int {
 
 fn main() {
 	println(day15a())
-	println(day15b())
+	//println(day15b())
 }
 
 fn read_day_string(path string) string {
