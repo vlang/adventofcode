@@ -98,7 +98,6 @@ fn solve (part2 bool) int {
 		return round
 	}
 
-	// keys := grid.keys
     minx := arrays.min(grid.keys().map(str2pos(it)[0])) or { 0 }
     maxx := arrays.max(grid.keys().map(str2pos(it)[0])) or { 0 }
     miny := arrays.min(grid.keys().map(str2pos(it)[1])) or { 0 }
