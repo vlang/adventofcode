@@ -13,7 +13,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install colordiff
+          sudo apt-get install colordiff libssl-dev libpcre3 libpcre3-dev
 
       - name: Checkout V
         uses: actions/checkout@v2
@@ -29,4 +29,4 @@ jobs:
           path: aoc
 
       - name: Run verify.v
-        run: cd aoc && v run verify.v
+        run: cd aoc && v install pcre && v run verify.v
