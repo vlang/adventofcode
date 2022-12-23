@@ -2,7 +2,7 @@ import os
 import arrays
 
 fn solve(part2 bool) int {
-	input := os.read_file('23.in') or { '' }
+	input := os.read_file('map.input') or { '' }
 	mut grid := map[string]bool{}
 
 	for y, vy in input.split('\n').map(it.split('')) {
