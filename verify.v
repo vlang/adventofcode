@@ -2,6 +2,7 @@ import os
 import v.util.diff
 import rand
 import time
+import term
 
 const diff_cmd = diff.find_working_diff_command() or { '' }
 
@@ -13,16 +14,26 @@ const skip_list = [
 	'do_not_delete',
 ]
 
-fn vrun(v_file string) !(string, time.Duration) {
+fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 	local_file_name := os.file_name(v_file)
 	vdir := os.dir(v_file)
-	sw := time.new_stopwatch()
-	res := os.execute('${vexe} run ${local_file_name}')
-	took := sw.elapsed()
-	if res.exit_code != 0 {
-		return error('could not: `v run ${local_file_name}` in working folder: "${vdir}"')
+	executable_name := local_file_name.replace('.v', '.exe')
+
+	sw_compilation := time.new_stopwatch()
+	compilation := os.execute('${vexe} -o ${executable_name} ${local_file_name}')
+	compile_time_took := sw_compilation.elapsed()
+	if compilation.exit_code != 0 {
+		return error('could not compile: `v ${local_file_name}` in working folder: "${vdir}", compilation output:\n${compilation.output}')
 	}
-	return res.output, took
+
+	sw_running := time.new_stopwatch()
+	res := os.execute('./${executable_name}')
+	run_time_took := sw_running.elapsed()
+	if res.exit_code != 0 {
+		return error('could not run: `${executable_name}` in working folder: "${vdir}"')
+	}
+
+	return res.output, compile_time_took, run_time_took
 }
 
 fn v_file2out_file(v_file string) string {
@@ -45,28 +56,54 @@ fn vout(v_file string, output string) !string {
 
 fn main() {
 	glob_pattern := '*' + os.args[1] or { '' } + '*'
+	if glob_pattern == '**' {
+		println('Note: you can also `v run verify.v PATTERN`, where PATTERN can be any part of the .v filepath, like: `v run verify.v 2022` or `v run verify.v Jalon` etc.')
+	}
 	mut v_files := []string{}
 	for folder in 2015 .. 2050 {
-		v_files << os.walk_ext(folder.str(), '.v')
+		unfiltered_files := os.walk_ext(folder.str(), '.v')
+		for v_file in unfiltered_files {
+			if glob_pattern != '**' && !v_file.match_glob(glob_pattern) {
+				// eprintln('> skipping non matching ${v_file:-30} for glob pattern: `${glob_pattern}`')
+				continue
+			}
+			if v_file in skip_list {
+				eprintln('skipping known failing ${v_file} ...')
+				continue
+			}
+			v_files << v_file
+		}
 	}
-	v_files.sort()
-	for v_file in v_files {
-		if glob_pattern != '**' && !v_file.match_glob(glob_pattern) {
-			// eprintln('> skipping non matching ${v_file:-30} for glob pattern: `${glob_pattern}`')
-			continue
-		}
-		if v_file in skip_list {
-			eprintln('> skipping known failing ${v_file} ...')
-			continue
-		}
+	v_files.sort_with_compare(fn (a &string, b &string) int {
+		xa := a.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
+		xb := b.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
+		return int(xa < xb)
+	})
+
+	mut erroring_files := []string{}
+	mut total_compilation_time := time.Duration(0)
+	mut total_running_time := time.Duration(0)
+	for idx, v_file in v_files {
 		os.chdir(wd)!
 		vdir := os.dir(v_file)
 		os.chdir(vdir)!
-		print('> checking ${v_file:-25} with ${v_file2relative_out_file(v_file):-40} ...')
+
+		print('[${idx + 1:3}/${v_files.len:-3}] checking ${v_file:-25} with ${v_file2relative_out_file(v_file):-40} ...')
 		flush_stdout()
-		output, took := vrun(v_file)!
-		println(' took ${took.milliseconds()} ms')
+
+		output, compilation_took, running_took := vrun(v_file) or {
+			println('\n>>>>> error: ${err}')
+			flush_stdout()
+			erroring_files << v_file
+			continue
+		}
+		total_compilation_time = total_compilation_time + compilation_took
+		total_running_time = total_running_time + running_took
+		ctook := '${compilation_took.milliseconds():4} ms'
+		rtook := '${running_took.milliseconds():5} ms'
+		println(' took ${term.green(ctook)} to compile, and ${term.bright_green(rtook)} to run.')
 		flush_stdout()
+
 		known := vout(v_file, output)!
 		if output != known {
 			eprintln('current output does not match the known one:')
@@ -76,5 +113,16 @@ fn main() {
 			eprintln(diff.color_compare_strings(diff_cmd, rand.ulid(), output, known))
 			exit(1)
 		}
+	}
+	ctook := '${total_compilation_time.milliseconds():6} ms'
+	rtook := '${total_running_time.milliseconds():6} ms'
+	println('Total compilation time: ${term.green(ctook)} ; Total running time: ${term.bright_green(rtook)}')
+
+	if erroring_files.len > 0 {
+		eprintln('Total files with errors: ${erroring_files.len}')
+		for e in erroring_files {
+			eprintln('   ${e}')
+		}
+		exit(1)
 	}
 }
