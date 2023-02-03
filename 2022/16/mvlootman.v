@@ -19,14 +19,14 @@ fn main() {
 	node_map := parse_input('valves.input') or { panic(err) }
 	part1 := traverse(node_map, 'AA', []string{}, 0)
 	println(part1)
-	//part 1 only!
+	// part 1 only!
 }
 
 fn parse_input(file string) !map[string]Valve {
 	input_pattern := r'Valve (\w+) has flow rate=(\d+); tunnels? leads? to valves? (.*)'
-	regex := regex.regex_opt(input_pattern) or { panic(err) }
+	re := regex.regex_opt(input_pattern) or { panic(err) }
 	valves := os.read_lines(file)!
-		.map(parse_valve(it, regex))
+		.map(parse_valve(it, re))
 
 	mut node_map := map[string]Valve{}
 	// create lookup node_map
@@ -42,9 +42,9 @@ fn parse_input(file string) !map[string]Valve {
 	return node_map
 }
 
-fn parse_valve(line string, regex regex.RE) Valve {
-	regex.match_string(line)
-	matches := regex.get_group_list()
+fn parse_valve(line string, re regex.RE) Valve {
+	re.match_string(line)
+	matches := re.get_group_list()
 		.map(line[it.start..it.end])
 
 	return Valve{
