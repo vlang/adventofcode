@@ -26,8 +26,8 @@ fn common(cluster []string) !int {
 	}
 }
 
-fn intersection(arrays ...[]u8) ![]u8 {
-	return reduce(arrays, fn (acc []u8, elem []u8) []u8 {
+fn intersection(arrays_ ...[]u8) ![]u8 {
+	return reduce(arrays_, fn (acc []u8, elem []u8) []u8 {
 		return acc.filter(elem.contains(it))
 	})!
 }

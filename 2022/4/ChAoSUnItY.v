@@ -41,8 +41,8 @@ fn intersect(ranges [][]int, cond fn (r_range []int, l_range []int, intersected_
 	}
 }
 
-fn intersection(arrays ...[]int) ![]int {
-	return reduce(arrays, fn (acc []int, elem []int) []int {
+fn intersection(arrays_ ...[]int) ![]int {
+	return reduce(arrays_, fn (acc []int, elem []int) []int {
 		return acc.filter(elem.contains(it))
 	})!
 }
