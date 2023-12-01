@@ -15,7 +15,7 @@ fn main() {
 			path = ['root']
 		} else if l.starts_with('$ cd ..') {
 			if path.len > 1 {
-				path = path#[..-1]
+				path = unsafe { path#[..-1] }
 			}
 		} else if l.starts_with('$ cd ') {
 			dir_name := l[5..]

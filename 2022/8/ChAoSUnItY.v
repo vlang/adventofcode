@@ -52,8 +52,8 @@ fn part2(data [][]int) !int {
 }
 
 fn range(size int, start int) [][]int {
-	return [[]int{len: start, init: start - it - 1}, []int{len: size - start - 1, init: start + 1 +
-		it}]
+	return [[]int{len: start, init: start - index - 1}, []int{len: size - start - 1, init: start +
+		1 + index}]
 }
 
 fn grid_cross_walk(size int, start_x int, start_y int) [][]int {

@@ -43,7 +43,7 @@ fn solve(lines []string, part_two bool) !i64 {
 }
 
 struct Monkey {
-	operation       fn (old i64) i64
+	operation       fn (old i64) i64 = unsafe { nil }
 	div_by          int
 	monkey_if_true  int
 	monkey_if_false int

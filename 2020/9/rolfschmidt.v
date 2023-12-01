@@ -6,7 +6,7 @@ import os
 
 fn d9_run(lines []u64, base int) u64 {
 	LINES: for i := 0; i < lines.len; i++ {
-		mut pre := lines[i..i + base]
+		mut pre := unsafe { lines[i..i + base] }
 		for x := 0; x < pre.len; x++ {
 			for y := 0; y < pre.len; y++ {
 				if pre[x] != pre[y] && pre[x] + pre[y] == lines[i + base] {

@@ -3,12 +3,12 @@ import os
 lines := os.read_lines('supplystacks.input')!
 
 mut commands := false // false == parsing crates, true == parsing commands
-mut stacks := map[int][]byte{}
-mut stacks2 := map[int][]byte{}
+mut stacks := map[int][]u8{}
+mut stacks2 := map[int][]u8{}
 mut src := 0
 mut dest := 0
 mut count := 0
-mut tmpstack := []byte{}
+mut tmpstack := []u8{}
 
 for l in lines {
 	if l == '' {
