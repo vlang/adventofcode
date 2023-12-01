@@ -44,14 +44,14 @@ fn v_file2relative_out_file(v_file string) string {
 	return v_file2out_file(v_file).replace(wd + '/', '')
 }
 
-fn vout(v_file string, output string) !string {
+fn vout(v_file string, output string) !(string, bool) {
 	out_file := v_file2out_file(v_file)
 	if !os.exists(out_file) {
-		eprintln('> .out file for ${v_file} does not exist, creating it based on the current run output...')
 		os.mkdir_all(os.dir(out_file))!
 		os.write_file(out_file, output)!
+		return output, true
 	}
-	return os.read_file(out_file)!
+	return os.read_file(out_file)!, false
 }
 
 fn main() {
@@ -81,6 +81,7 @@ fn main() {
 	})
 
 	mut erroring_files := []string{}
+	mut new_files := []string{}
 	mut total_compilation_time := time.Duration(0)
 	mut total_running_time := time.Duration(0)
 	for idx, v_file in v_files {
@@ -104,14 +105,18 @@ fn main() {
 		println(' took ${term.green(ctook)} to compile, and ${term.bright_green(rtook)} to run.')
 		flush_stdout()
 
-		known := vout(v_file, output)!
+		known, is_new := vout(v_file, output)!
+		if is_new {
+			eprintln('> .out file for ${v_file} does not exist, creating it based on the current run output...')
+			new_files << v_file
+		}
 		if output != known {
 			eprintln('current output does not match the known one:')
 			eprintln('v_file: ${v_file}')
 			eprintln('current output:\n${output}')
 			eprintln('  known output:\n${known}')
 			eprintln(diff.color_compare_strings(diff_cmd, rand.ulid(), output, known))
-			exit(1)
+			erroring_files << v_file
 		}
 	}
 	ctook := '${total_compilation_time.milliseconds():6} ms'
@@ -124,5 +129,12 @@ fn main() {
 			eprintln('   ${e}')
 		}
 		exit(1)
+	}
+	if new_files.len > 0 && os.getenv('CI') == 'true' {
+		eprintln('Detected ${new_files.len} missing output files, you should run "v run verify.v" to generate output files')
+		for n in new_files {
+			eprintln('    v run verify.v ${n}')
+		}
+		exit(2)
 	}
 }
