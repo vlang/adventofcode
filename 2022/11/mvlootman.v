@@ -125,7 +125,7 @@ fn parse_monkey(monkey_lines []string) Monkey {
 
 // only execute the log() calls when flag is set e.g.
 // v -d write_log mvlootman.v
-[if write_log ?]
+@[if write_log ?]
 fn log(s string) {
 	println(s)
 }

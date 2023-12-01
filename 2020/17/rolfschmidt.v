@@ -4,7 +4,7 @@ module main
 
 import os
 
-[inline]
+@[inline]
 fn d17_run(part2 bool) int {
 	mut lines := read_day('17.input')
 	mut cubes := map[string]bool{}
@@ -59,7 +59,7 @@ fn d17_run(part2 bool) int {
 			for y in ymin .. ymax {
 				for z in zmin .. zmax {
 					for w in wmin .. wmax {
-						mut c := cubes['${x}_${y}_${z}_$w']
+						mut c := cubes['${x}_${y}_${z}_${w}']
 						mut nc := 0
 						for sx in -1 .. 2 {
 							for sy in -1 .. 2 {
@@ -77,9 +77,9 @@ fn d17_run(part2 bool) int {
 							}
 						}
 						if nc >= 2 && nc <= 3 && c {
-							ch << '${x}_${y}_${z}_$w'
+							ch << '${x}_${y}_${z}_${w}'
 						} else if nc == 3 && !c {
-							ch << '${x}_${y}_${z}_$w'
+							ch << '${x}_${y}_${z}_${w}'
 						}
 					}
 				}

@@ -1,14 +1,12 @@
 import os
 import arrays { sum }
 
-const (
-	draw     = 3
-	lose     = 0
-	win      = 6
-	rock     = 1
-	paper    = 2
-	scissors = 3
-)
+const draw = 3
+const lose = 0
+const win = 6
+const rock = 1
+const paper = 2
+const scissors = 3
 
 fn main() {
 	lines := os.read_lines('rock_paper_scissors.input')!

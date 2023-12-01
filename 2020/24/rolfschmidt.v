@@ -5,7 +5,7 @@ module main
 import os
 import pcre
 
-[inline]
+@[inline]
 fn d24_run(part2 bool) int {
 	mut lines := read_day('24.input')
 	mut matrix := []string{}
@@ -35,7 +35,7 @@ fn d24_run(part2 bool) int {
 				cz--
 			}
 		}
-		pos := '${cx}_${cy}_$cz'
+		pos := '${cx}_${cy}_${cz}'
 		if pos in matrix {
 			matrix.delete(matrix.index(pos))
 		} else {
@@ -45,8 +45,8 @@ fn d24_run(part2 bool) int {
 	if !part2 {
 		return matrix.len
 	}
-	nbrs := [[0, 1, -1], [1, 0, -1],
-		[1, -1, 0], [0, -1, 1], [-1, 0, 1], [-1, 1, 0]]
+	nbrs := [[0, 1, -1], [1, 0, -1], [1, -1, 0], [0, -1, 1], [-1, 0, 1],
+		[-1, 1, 0]]
 	for _ in 0 .. 100 {
 		mut new_matrix := map[string]bool{}
 		for tile in matrix {
@@ -103,7 +103,7 @@ fn read_day(path string) []string {
 
 // returns a array of the regex matched strings
 fn regex_match(value string, query string) []string {
-	r := pcre.new_regex(query, 0) or { panic('err $err - value $value - query $query') }
+	r := pcre.new_regex(query, 0) or { panic('err ${err} - value ${value} - query ${query}') }
 	m := r.match_str(value, 0, 0) or { return [] }
 	mut result := []string{}
 	for i := 0; i < m.group_size; i++ {

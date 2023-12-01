@@ -10,10 +10,10 @@ fn d22_game(pp1 []int, pp2 []int, part2 bool) ([]int, []int) {
 	mut seen := map[string]bool{}
 	for p1.len > 0 && p2.len > 0 {
 		mut p1_wins := true
-		if seen['$p1;$p2'] && part2 {
+		if seen['${p1};${p2}'] && part2 {
 			break
 		}
-		seen['$p1;$p2'] = true
+		seen['${p1};${p2}'] = true
 		p1c := p1[0]
 		p2c := p2[0]
 		p1.delete(0)

@@ -125,7 +125,7 @@ fn (c Coord) distance(other Coord) int {
 
 fn (c Coord) is_straight(other Coord) bool {
 	//  touching if they share row or col
-	return (c.x == other.x) || (c.y == other.y)
+	return c.x == other.x || c.y == other.y
 }
 
 fn print_node_list(list []Coord) {

@@ -81,11 +81,9 @@ fn (tile Tile) borderless() Tile {
 }
 
 fn (tile Tile) monster() [][]int {
-	return [[0, 0], [1, 1], [3, 0], [1, -1],
-		[1, 0], [1, 1], [3, 0], [1, -1], [1, 0],
-		[1, 1], [3, 0], [1, -1], [1, 0], [0, -1],
-		[1, 1],
-	]
+	return [[0, 0], [1, 1], [3, 0], [1, -1], [1, 0], [1, 1], [3, 0],
+		[1, -1], [1, 0], [1, 1], [3, 0], [1, -1], [1, 0], [0, -1],
+		[1, 1]]
 }
 
 fn (tile Tile) monsters() int {
@@ -156,22 +154,23 @@ fn d20_run(part2 bool) u64 {
 			combos: for combo in combos {
 				for x, xv in rm {
 					for y, rtile in xv {
-						if !result_exists(mut rm, x.int() - 1, y.int()) && combo.right() == rtile.left() {
+						if !result_exists(mut rm, x.int() - 1, y.int())
+							&& combo.right() == rtile.left() {
 							add_result(mut rm, x.int() - 1, y.int(), combo)
 							rc[number] = true
 							break combos
-						} else if !result_exists(mut rm, x.int() + 1, y.int()) && combo.left() ==
-							rtile.right() {
+						} else if !result_exists(mut rm, x.int() + 1, y.int())
+							&& combo.left() == rtile.right() {
 							add_result(mut rm, x.int() + 1, y.int(), combo)
 							rc[number] = true
 							break combos
-						} else if !result_exists(mut rm, x.int(), y.int() + 1) && combo.top() ==
-							rtile.bottom() {
+						} else if !result_exists(mut rm, x.int(), y.int() + 1)
+							&& combo.top() == rtile.bottom() {
 							add_result(mut rm, x.int(), y.int() + 1, combo)
 							rc[number] = true
 							break combos
-						} else if !result_exists(mut rm, x.int(), y.int() - 1) && combo.bottom() ==
-							rtile.top() {
+						} else if !result_exists(mut rm, x.int(), y.int() - 1)
+							&& combo.bottom() == rtile.top() {
 							add_result(mut rm, x.int(), y.int() - 1, combo)
 							rc[number] = true
 							break combos
@@ -188,21 +187,18 @@ fn d20_run(part2 bool) u64 {
 	for x, xv in rm {
 		for y, rtile in xv {
 			if num_top_left[2] == -1 || (num_top_left[0] >= x.int() && num_top_left[1] <= y.int()) {
-				num_top_left = [x.int(),
-					y.int(), rtile.number.int()]
+				num_top_left = [x.int(), y.int(), rtile.number.int()]
 			}
-			if num_top_right[2] == -1 ||
-				(num_top_right[0] <= x.int() && num_top_right[1] <= y.int()) {
-				num_top_right = [x.int(),
-					y.int(), rtile.number.int()]
+			if num_top_right[2] == -1 || (num_top_right[0] <= x.int()
+				&& num_top_right[1] <= y.int()) {
+				num_top_right = [x.int(), y.int(), rtile.number.int()]
 			}
-			if num_bottom_left[2] == -1 ||
-				(num_bottom_left[0] >= x.int() && num_bottom_left[1] >= y.int()) {
-				num_bottom_left = [x.int(),
-					y.int(), rtile.number.int()]
+			if num_bottom_left[2] == -1 || (num_bottom_left[0] >= x.int()
+				&& num_bottom_left[1] >= y.int()) {
+				num_bottom_left = [x.int(), y.int(), rtile.number.int()]
 			}
-			if num_bottom_right[2] == -1 ||
-				(num_bottom_right[0] <= x.int() && num_bottom_right[1] >= y.int()) {
+			if num_bottom_right[2] == -1 || (num_bottom_right[0] <= x.int()
+				&& num_bottom_right[1] >= y.int()) {
 				num_bottom_right = [
 					x.int(),
 					y.int(),

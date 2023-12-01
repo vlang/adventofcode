@@ -67,13 +67,13 @@ fn (p D4Passport) pid_valid() bool {
 }
 
 fn (p D4Passport) valid() bool {
-	return p.byr > 0 &&
-		p.iyr > 0 && p.eyr > 0 && p.hgt.len > 0 && p.hcl.len > 0 && p.ecl.len > 0 && p.pid.len > 0
+	return p.byr > 0 && p.iyr > 0 && p.eyr > 0 && p.hgt.len > 0 && p.hcl.len > 0 && p.ecl.len > 0
+		&& p.pid.len > 0
 }
 
 fn (p D4Passport) valid_deep() bool {
-	return p.valid() && p.byr_valid() && p.iyr_valid() && p.eyr_valid() && p.hgt_valid() && p.hcl_valid() &&
-		p.ecl_valid() && p.pid_valid()
+	return p.valid() && p.byr_valid() && p.iyr_valid() && p.eyr_valid() && p.hgt_valid()
+		&& p.hcl_valid() && p.ecl_valid() && p.pid_valid()
 }
 
 fn d4_parse_passport(passports_data string) []D4Passport {

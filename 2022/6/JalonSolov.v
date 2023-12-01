@@ -1,9 +1,7 @@
 import os
 
-const (
-	start_of_packet_marker  = 4
-	start_of_message_marker = 14
-)
+const start_of_packet_marker = 4
+const start_of_message_marker = 14
 
 fn find_marker(stream []u8, marker_len int) !int {
 	mut dup := false

@@ -4,7 +4,7 @@ module main
 
 import os
 
-[inline]
+@[inline]
 fn d15_run(lines string, find int) int {
 	mut spoken_before := map[int]int{}
 	mut spoken := map[int]int{}

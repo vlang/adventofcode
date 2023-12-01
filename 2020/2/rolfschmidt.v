@@ -14,8 +14,8 @@ mut:
 }
 
 fn (p D2Password) valid() bool {
-	return p.check_string.count(p.check_char) >= p.min_char &&
-		p.check_string.count(p.check_char) <= p.max_char
+	return p.check_string.count(p.check_char) >= p.min_char
+		&& p.check_string.count(p.check_char) <= p.max_char
 }
 
 fn (p D2Password) valid_by_index() bool {
@@ -75,7 +75,7 @@ fn read_day(path string) []string {
 }
 
 fn regex_match(value string, query string) []string {
-	r := pcre.new_regex(query, 0) or { panic('err $err - value $value - query $query') }
+	r := pcre.new_regex(query, 0) or { panic('err ${err} - value ${value} - query ${query}') }
 	m := r.match_str(value, 0, 0) or { return [] }
 	mut result := []string{}
 	for i := 0; i < m.group_size; i++ {

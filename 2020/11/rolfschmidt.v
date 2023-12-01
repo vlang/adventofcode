@@ -212,7 +212,6 @@ fn read_day(path string) []string {
 	return read_day_string(path).split_into_lines()
 }
 
-
 // returns flipped value
 fn string_flip(value string, a string, b string) string {
 	if value == a {

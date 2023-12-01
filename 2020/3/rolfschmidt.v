@@ -55,8 +55,8 @@ fn day03a() u64 {
 fn day03b() u64 {
 	day_map := read_day('3.input')
 	mut map_obj := d3_parse_map(day_map)
-	return map_obj.tree_count(1, 1) * map_obj.tree_count(3, 1) * map_obj.tree_count(5, 1) * map_obj.tree_count(7, 1) *
-		map_obj.tree_count(1, 2)
+	return map_obj.tree_count(1, 1) * map_obj.tree_count(3, 1) * map_obj.tree_count(5,
+		1) * map_obj.tree_count(7, 1) * map_obj.tree_count(1, 2)
 }
 
 fn main() {

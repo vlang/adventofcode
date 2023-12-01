@@ -70,12 +70,12 @@ fn day19b() int {
 
 fn main() {
 	println(day19a())
-	//println(day19b())
+	// println(day19b())
 }
 
 // returns a array of the regex matched strings
 fn regex_match(value string, query string) []string {
-	r := pcre.new_regex(query, 0) or { panic('err $err - value $value - query $query') }
+	r := pcre.new_regex(query, 0) or { panic('err ${err} - value ${value} - query ${query}') }
 	m := r.match_str(value, 0, 0) or { return [] }
 	mut result := []string{}
 	for i := 0; i < m.group_size; i++ {
@@ -90,4 +90,3 @@ fn read_day_string(path string) string {
 	mut data := os.read_file(path) or { panic(err) }
 	return data.trim(' \n\t\v\f\r')
 }
-

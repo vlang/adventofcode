@@ -1,11 +1,9 @@
 import os
 import arrays
 
-const (
-	c100k = 100_000
-	c70m  = 70_000_000
-	c30m  = 30_000_000
-)
+const c100k = 100_000
+const c70m = 70_000_000
+const c30m = 30_000_000
 
 mut dir_sizes := map[string]int{}
 mut curdir := ''

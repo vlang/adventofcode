@@ -10,9 +10,8 @@ fn d16_run(part2 bool) u64 {
 	mut classes := map[string][][]int{}
 	for class_line in lines[0].split('\n') {
 		groups := regex_match(class_line, r'([^:]+):\s(\d+)-(\d+)\sor\s(\d+)-(\d+)')
-		classes[groups[1]] = [[groups[2].int(),
-			groups[3].int(),
-		], [groups[4].int(), groups[5].int()]]
+		classes[groups[1]] = [[groups[2].int(), groups[3].int()],
+			[groups[4].int(), groups[5].int()]]
 	}
 	your := lines[1].all_after('your ticket:\n').split(',').map(it.int())
 	nearby_lines := lines[2].all_after('nearby tickets:\n').split('\n')
@@ -106,7 +105,7 @@ fn read_day_string(path string) string {
 
 // returns a array of the regex matched strings
 fn regex_match(value string, query string) []string {
-	r := pcre.new_regex(query, 0) or { panic('err $err - value $value - query $query') }
+	r := pcre.new_regex(query, 0) or { panic('err ${err} - value ${value} - query ${query}') }
 	m := r.match_str(value, 0, 0) or { return [] }
 	mut result := []string{}
 	for i := 0; i < m.group_size; i++ {

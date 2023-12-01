@@ -131,7 +131,7 @@ fn read_day(path string) []string {
 
 // returns a array of the regex matched strings
 fn regex_match(value string, query string) []string {
-	r := pcre.new_regex(query, 0) or { panic('err $err - value $value - query $query') }
+	r := pcre.new_regex(query, 0) or { panic('err ${err} - value ${value} - query ${query}') }
 	m := r.match_str(value, 0, 0) or { return [] }
 	mut result := []string{}
 	for i := 0; i < m.group_size; i++ {

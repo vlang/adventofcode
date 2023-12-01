@@ -7,8 +7,8 @@ type Item = []Item | int
 
 enum OrderingState {
 	unknown = 0
-	right = -1
-	wrong = 1
+	right   = -1
+	wrong   = 1
 }
 
 struct Pair {

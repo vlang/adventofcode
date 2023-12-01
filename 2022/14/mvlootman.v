@@ -4,19 +4,17 @@ import math
 import arrays { max }
 import os
 
-const (
-	air           = `.`
-	rock          = `#`
-	sand          = `o`
-	drop_location = `+`
-)
+const air = `.`
+const rock = `#`
+const sand = `o`
+const drop_location = `+`
 
 const a = 2
 
 fn main() {
 	paths := os.read_lines('cave.input')!
-	.map(it.split(' -> '))
-	.map(parse_coord(it))
+		.map(it.split(' -> '))
+		.map(parse_coord(it))
 
 	mut sim := Simulation{}
 	sim.add_paths(paths)
@@ -31,12 +29,12 @@ fn main() {
 
 fn parse_coord(path []string) []Coord {
 	return path.map(it.split(',')
-	.map(it.int()))
-	.map(Coord{it[0], it[1]})
+		.map(it.int()))
+		.map(Coord{it[0], it[1]})
 }
 
 struct Coord {
-	mut:
+mut:
 	x int
 	y int
 }
@@ -47,7 +45,7 @@ fn (c Coord) str() string {
 }
 
 struct Simulation {
-	mut:
+mut:
 	occupied          map[string]rune
 	lowest_rock_level int
 }

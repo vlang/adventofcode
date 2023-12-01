@@ -32,8 +32,7 @@ fn d21_run(part2 bool) string {
 	mut lines := read_day('21.input')
 	mut ingredients := [][][]string{}
 	for line in lines {
-		ingredients <<
-			[line.all_before(' (').split(' '), line.all_after('(contains ').all_before(')').split(', ')]
+		ingredients << [line.all_before(' (').split(' '), line.all_after('(contains ').all_before(')').split(', ')]
 	}
 	mut alling := map[string]map[string]int{}
 	for data in ingredients {

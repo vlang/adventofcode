@@ -3,7 +3,7 @@ import arrays { fold }
 
 interface Cyclable {
 mut:
-	cycle int
+	cycle      int
 	register_x int
 	run_cycle()
 }

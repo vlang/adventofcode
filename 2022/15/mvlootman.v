@@ -14,7 +14,7 @@ struct Sensor {
 
 fn main() {
 	sensors := os.read_lines('beacons.input')!
-	.map(parse_sensor(it))
+		.map(parse_sensor(it))
 
 	part1 := solve_part1(sensors)
 	part2 := solve_part2(sensors)!
@@ -34,7 +34,7 @@ fn solve_part1(sensors []Sensor) int {
 }
 
 struct Interval {
-	mut:
+mut:
 	from int
 	to   int
 }
@@ -93,7 +93,7 @@ fn get_min_max_sensor_range_x(sensors []Sensor) (int, int) {
 
 fn pos_cannot_be_unknown_beacon(x int, y int, sensor Sensor) bool {
 	return !(abs(sensor.x - x) + abs(sensor.y - y) <= sensor.distance)
-	|| (x == sensor.beacon_x && y == sensor.beacon_y)
+		|| (x == sensor.beacon_x && y == sensor.beacon_y)
 }
 
 fn parse_sensor(line string) Sensor {
