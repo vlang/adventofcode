@@ -29,5 +29,11 @@ jobs:
         with:
           path: aoc
 
+      - name: Install dependencies
+        run: v install pcre
+
       - name: Run verify.v
-        run: cd aoc && v install pcre && v run verify.v
+        run: cd aoc && v run verify.v
+
+      - name: Format
+        run: v fmt . -c
