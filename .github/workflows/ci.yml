@@ -30,7 +30,7 @@ jobs:
           path: aoc
 
       - name: Install dependencies
-        run: v instlal pcre
+        run: v install pcre
 
       - name: Run verify.v
         run: cd aoc && v run verify.v
