@@ -1,9 +1,9 @@
 import os { read_file }
 
 fn main() {
-	inputs_part1 := read_file("calibration-part1.input")!.split_into_lines()
+	inputs_part1 := read_file('calibration-part1.input')!.split_into_lines()
 	println(part1(inputs_part1))
-	inputs_part2 := read_file("calibration-part2.input")!.split_into_lines()
+	inputs_part2 := read_file('calibration-part2.input')!.split_into_lines()
 	println(part2(inputs_part2))
 }
 
@@ -14,7 +14,9 @@ fn part1(inputs []string) int {
 		mut last := 0
 		for c in line {
 			if c > `0` && c <= `9` {
-				if first == 0 { first = c - u8(`0`) }
+				if first == 0 {
+					first = c - u8(`0`)
+				}
 				last = c - u8(`0`)
 			}
 		}
@@ -25,8 +27,9 @@ fn part1(inputs []string) int {
 
 fn part2(inputs []string) int {
 	mut sum := 0
-	replacers := ["1", "one", "2", "two", "3", "three", "4", "four", "5", "five", "6", "six", "7", "seven", "8", "eight", "9", "nine"]
-	values := ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+	replacers := ['1', 'one', '2', 'two', '3', 'three', '4', 'four', '5', 'five', '6', 'six', '7',
+		'seven', '8', 'eight', '9', 'nine']
+	values := ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 	for old_line in inputs {
 		line := old_line.replace_each(replacers)
 		reversed := line.reverse()
@@ -53,4 +56,3 @@ fn part2(inputs []string) int {
 	}
 	return sum
 }
-
