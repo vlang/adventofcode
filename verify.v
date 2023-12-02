@@ -54,11 +54,21 @@ fn vout(v_file string, output string) !(string, bool) {
 	return os.read_file(out_file)!, false
 }
 
-fn main() {
+fn discover_files() ![]string {
 	glob_pattern := '*' + os.args[1] or { '' } + '*'
 	if glob_pattern == '**' {
+		if os.getenv('CI') == 'true' {
+			// https://stackoverflow.com/a/25071749
+			changes := os.execute('git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main)')!.split_into_lines()
+			files := changes.filter(it.endswith('.v'))
+			if files.len > 0 {
+				eprintln('running only a subset of tests based on the git diff: ${files}')
+				return files
+			}
+		}
 		println('Note: you can also `v run verify.v PATTERN`, where PATTERN can be any part of the .v filepath, like: `v run verify.v 2022` or `v run verify.v Jalon` etc.')
 	}
+
 	mut v_files := []string{}
 	for folder in 2015 .. 2050 {
 		unfiltered_files := os.walk_ext(folder.str(), '.v')
@@ -74,6 +84,12 @@ fn main() {
 			v_files << v_file
 		}
 	}
+
+	return v_files
+}
+
+fn main() {
+	v_files := discover_files()!
 	v_files.sort_with_compare(fn (a &string, b &string) int {
 		xa := a.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
 		xb := b.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
