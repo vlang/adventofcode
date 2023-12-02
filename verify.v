@@ -59,7 +59,7 @@ fn discover_files() ![]string {
 	if glob_pattern == '**' {
 		if os.getenv('CI') != '' {
 			// https://stackoverflow.com/a/25071749
-			changes := os.execute('git --no-pager diff --name-only $(git merge-base FETCH_HEAD main) FETCH_HEAD').output.split_into_lines()
+			changes := os.execute('git --no-pager diff --name-only origin').output.split_into_lines()
 			files := changes.filter(it.ends_with('.v') && it.starts_with('20'))
 			if files.len > 0 {
 				eprintln('running only a subset of tests based on the git diff: ${files}')
