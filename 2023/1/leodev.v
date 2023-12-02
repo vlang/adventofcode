@@ -1,9 +1,9 @@
 import os { read_file }
 
 fn main() {
-	inputs_part1 := read_file('calibration-part1.input')!.split_into_lines()
+	inputs_part1 := read_file('trebuchet-part1.input')!.split_into_lines()
 	println(part1(inputs_part1))
-	inputs_part2 := read_file('calibration-part2.input')!.split_into_lines()
+	inputs_part2 := read_file('trebuchet-part2.input')!.split_into_lines()
 	println(part2(inputs_part2))
 }
 
