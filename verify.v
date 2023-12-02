@@ -59,7 +59,7 @@ fn discover_files() ![]string {
 	if glob_pattern == '**' {
 		if os.getenv('CI') != '' {
 			// https://stackoverflow.com/a/25071749
-			changes := os.execute('git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main)').output.split_into_lines()
+			changes := os.execute('git --no-pager diff --name-only $(git merge-base FETCH_HEAD main) FETCH_HEAD').output.split_into_lines()
 			files := changes.filter(it.ends_with('.v') && it.starts_with('20'))
 			if files.len > 0 {
 				eprintln('running only a subset of tests based on the git diff: ${files}')
@@ -102,6 +102,11 @@ fn main() {
 	mut total_running_time := time.Duration(0)
 	for idx, v_file in v_files {
 		os.chdir(wd)!
+		if !os.exists(v_file) {
+			// in the case of a CI diff, the file may have been deleted
+			eprintln('> skipping missing file ${v_file}')
+			continue
+		}
 		vdir := os.dir(v_file)
 		os.chdir(vdir)!
 
