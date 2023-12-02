@@ -1,7 +1,5 @@
 import os { read_file }
 
-// hello
-
 fn main() {
 	inputs_part1 := read_file('trebuchet-part1.input')!.split_into_lines()
 	println(part1(inputs_part1))
