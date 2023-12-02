@@ -150,7 +150,7 @@ fn main() {
 		}
 		exit(1)
 	}
-	if new_files.len > 0 && os.getenv('CI') == 'true' {
+	if new_files.len > 0 && os.getenv('CI') != '' {
 		eprintln('Detected ${new_files.len} missing output files, you should run "v run verify.v" to generate output files')
 		for n in new_files {
 			eprintln('    v run verify.v ${n}')
