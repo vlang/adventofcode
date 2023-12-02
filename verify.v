@@ -54,11 +54,20 @@ fn vout(v_file string, output string) !(string, bool) {
 	return os.read_file(out_file)!, false
 }
 
-fn main() {
+fn discover_files() ![]string {
 	glob_pattern := '*' + os.args[1] or { '' } + '*'
 	if glob_pattern == '**' {
+		if os.getenv('CI') != '' {
+			git_diff_cmd := 'git --no-pager diff --name-only origin'
+			println(git_diff_cmd)
+			changes := os.execute(git_diff_cmd).output.split_into_lines()
+			files := changes.filter(it.ends_with('.v') && it.starts_with('20'))
+			println('running only a subset of all tests, based on the git diff for the new/changed solutions, compared to the main origin branch: ${files}')
+			return files
+		}
 		println('Note: you can also `v run verify.v PATTERN`, where PATTERN can be any part of the .v filepath, like: `v run verify.v 2022` or `v run verify.v Jalon` etc.')
 	}
+
 	mut v_files := []string{}
 	for folder in 2015 .. 2050 {
 		unfiltered_files := os.walk_ext(folder.str(), '.v')
@@ -74,6 +83,12 @@ fn main() {
 			v_files << v_file
 		}
 	}
+
+	return v_files
+}
+
+fn main() {
+	mut v_files := discover_files()!
 	v_files.sort_with_compare(fn (a &string, b &string) int {
 		xa := a.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
 		xb := b.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
@@ -86,6 +101,11 @@ fn main() {
 	mut total_running_time := time.Duration(0)
 	for idx, v_file in v_files {
 		os.chdir(wd)!
+		if !os.exists(v_file) {
+			// in the case of a CI diff, the file may have been deleted
+			eprintln('> skipping missing file ${v_file}')
+			continue
+		}
 		vdir := os.dir(v_file)
 		os.chdir(vdir)!
 
@@ -130,7 +150,7 @@ fn main() {
 		}
 		exit(1)
 	}
-	if new_files.len > 0 && os.getenv('CI') == 'true' {
+	if new_files.len > 0 && os.getenv('CI') != '' {
 		eprintln('Detected ${new_files.len} missing output files, you should run "v run verify.v" to generate output files')
 		for n in new_files {
 			eprintln('    v run verify.v ${n}')
