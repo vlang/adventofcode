@@ -59,8 +59,8 @@ fn discover_files() ![]string {
 	if glob_pattern == '**' {
 		if os.getenv('CI') != '' {
 			// https://stackoverflow.com/a/25071749
-			changes := os.execute('git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main)')!.split_into_lines()
-			files := changes.filter(it.endswith('.v') && it.startswith('20'))
+			changes := os.execute('git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main)').output.split_into_lines()
+			files := changes.filter(it.ends_with('.v') && it.starts_with('20'))
 			if files.len > 0 {
 				eprintln('running only a subset of tests based on the git diff: ${files}')
 				return files
@@ -89,7 +89,7 @@ fn discover_files() ![]string {
 }
 
 fn main() {
-	v_files := discover_files()!
+	mut v_files := discover_files()!
 	v_files.sort_with_compare(fn (a &string, b &string) int {
 		xa := a.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
 		xb := b.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
