@@ -57,7 +57,7 @@ fn vout(v_file string, output string) !(string, bool) {
 fn discover_files() ![]string {
 	glob_pattern := '*' + os.args[1] or { '' } + '*'
 	if glob_pattern == '**' {
-		if os.getenv('CI') == 'true' {
+		if os.getenv('CI') != '' {
 			// https://stackoverflow.com/a/25071749
 			changes := os.execute('git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD main)')!.split_into_lines()
 			files := changes.filter(it.endswith('.v') && it.startswith('20'))
