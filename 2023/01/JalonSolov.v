@@ -1,6 +1,16 @@
 import os
 
-const nums = {'one': `1`, 'two': `2`, 'three': `3`, 'four': `4`, 'five': `5`, 'six': `6`, 'seven': `7`, 'eight': `8`, 'nine': `9`}
+const nums = {
+	'one':   `1`
+	'two':   `2`
+	'three': `3`
+	'four':  `4`
+	'five':  `5`
+	'six':   `6`
+	'seven': `7`
+	'eight': `8`
+	'nine':  `9`
+}
 
 fn calc_calibration(lines []string, part2 bool) int {
 	mut calibration_total := 0
