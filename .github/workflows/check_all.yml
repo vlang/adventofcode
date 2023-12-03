@@ -2,8 +2,8 @@ name: CI
 
 on:
   workflow_dispatch:
-  push:
-  pull_request:
+  schedule:
+    - cron: '31 17 * * *'
 
 jobs:
   works-on-latest-v-and-ubuntu:
@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: v install pcre
 
-      - name: Run verify.v to check solutions
-        run: cd aoc && CHANGED=1 v run verify.v
-
       - name: Check .v formatting
         run: v fmt . -c
+
+      - name: Run verify.v to check solutions
+        run: cd aoc && v run verify.v
