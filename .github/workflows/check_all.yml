@@ -1,4 +1,4 @@
-name: CI
+name: Check All Solutions
 
 on:
   workflow_dispatch:
