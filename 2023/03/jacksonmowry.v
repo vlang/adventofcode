@@ -3,8 +3,7 @@ module main
 import os
 import arrays
 
-const symbols = ['$'[0], '+'[0], '@'[0], '-'[0], '='[0], '*'[0], '!'[0], '#'[0], '&'[0], '%'[0],
-	'/'[0]]
+const symbols = [`$`, `+`, `@`, `-`, `=`, `*`, `!`, `#`, `&`, `%`, `/`]
 
 fn main() {
 	lines := os.read_lines('schematic.input')!
@@ -45,19 +44,19 @@ fn solve(lines []string, part_2 bool) int {
 
 fn explore(lines []string, row int, col int) int {
 	lines[row] or { return 0 }.substr_with_check(col, col) or { return 0 }
-	if lines[row][col] == '.'[0] {
+	if lines[row][col] == `.` {
 		return 0
 	}
 	mut beg := col
 	mut end := col
 	for beg > 0 {
-		if lines[row][beg - 1] == '.'[0] || lines[row][beg - 1] in symbols {
+		if lines[row][beg - 1] == `.` || lines[row][beg - 1] in symbols {
 			break
 		}
 		beg -= 1
 	}
 	for end < lines[row].len - 1 {
-		if lines[row][end + 1] == '.'[0] || lines[row][end + 1] in symbols {
+		if lines[row][end + 1] == `.` || lines[row][end + 1] in symbols {
 			break
 		}
 		end += 1
