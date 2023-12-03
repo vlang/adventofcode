@@ -2,6 +2,7 @@ name: Check All Solutions
 
 on:
   workflow_dispatch:
+  push:
   schedule:
     - cron: '31 17 * * *'
 
