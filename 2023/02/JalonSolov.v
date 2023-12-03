@@ -11,7 +11,7 @@ mut sum_of_powers := 0
 
 for l in lines {
 	game_num := l[5..].int()
-	draws := l[l.index(':')!+1..].split(';').map(it.trim_space())
+	draws := l[l.index(':')! + 1..].split(';').map(it.trim_space())
 	mut possible := true
 	mut min_red := 0
 	mut min_green := 0
@@ -22,7 +22,7 @@ for l in lines {
 
 		for cube in cubes {
 			num_cubes := cube.int()
-			cube_color := cube[cube.index(' ')!+1..]
+			cube_color := cube[cube.index(' ')! + 1..]
 
 			match cube_color {
 				'red' {
