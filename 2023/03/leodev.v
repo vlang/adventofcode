@@ -15,9 +15,10 @@ fn part1(inputs []string) int {
 			if letter >= `0` && letter <= `9` {
 				number = number * 10 + letter - u8(`0`)
 				if !found {
-					for dx in -1..2 {
-						for dy in -1..2 {
-							if x + dx >= 0 && x + dx < inputs.len && y + dy >= 0 && y + dy < input.len {
+					for dx in -1 .. 2 {
+						for dy in -1 .. 2 {
+							if x + dx >= 0 && x + dx < inputs.len && y + dy >= 0
+								&& y + dy < input.len {
 								dl := inputs[x + dx][y + dy]
 								if dl != `.` && (dl < `0` || dl > `9`) {
 									found = true
@@ -45,10 +46,12 @@ fn part2(inputs []string) int {
 	mut sum := 0
 	for x, input in inputs {
 		for y, letter in input {
-			if letter != `*` { continue }
+			if letter != `*` {
+				continue
+			}
 			mut numbers := []int{}
-			for dx in -1..2 {
-				for dy in -1..2 {
+			for dx in -1 .. 2 {
+				for dy in -1 .. 2 {
 					if x + dx >= 0 && x + dx < inputs.len && y + dy >= 0 && y + dy < input.len {
 						if number := try_read_number(inputs, x + dx, y + dy) {
 							numbers << number
@@ -82,4 +85,3 @@ fn try_read_number(inputs []string, x int, y int) ?int {
 	}
 	return number
 }
-
