@@ -56,18 +56,14 @@ fn vout(v_file string, output string) !(string, bool) {
 
 fn discover_files() ![]string {
 	if os.getenv('CHANGED') != '' {
-		base_ref := 'origin/main'
-		ref := 'HEAD'
-		git_diff_cmd := 'git --no-pager diff --name-only ${base_ref} ${ref}'
+		git_diff_cmd := 'git --no-pager diff --name-only origin/main HEAD'
 		eprintln(git_diff_cmd)
 		changes := os.execute(git_diff_cmd).output.split_into_lines()
 		dump(changes)
 		files := changes.filter(it.ends_with('.v') && it.starts_with('20'))
-		if files.len > 0 {
-			println('running only a subset of all tests, based on the git diff for the new/changed solutions, compared to the main origin branch: ${files}')
-			flush_stdout()
-			return files
-		}
+		println('running only a subset of all tests, based on the git diff for the new/changed solutions, compared to the main origin branch: ${files}')
+		flush_stdout()
+		return files
 	}
 
 	glob_pattern := '*' + os.args[1] or { '' } + '*'
