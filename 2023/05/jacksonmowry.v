@@ -24,25 +24,42 @@ fn main() {
 	println('Part 1: ${arrays.min(seeds)!}')
 
 	mut seeds_2 := (input[0][0].split(': ')[1]).split(' ').map(it.u64())
-	mut part_2_min := max_u64
+	mut ranges := [][]u64{}
+	for i := 0; i < seeds_2.len - 1; i += 2 {
+		ranges << [seeds_2[i], seeds_2[i] + seeds_2[i + 1]]
+	}
 	mut maps := [][][]u64{}
 	for i in 1 .. 8 {
 		maps << input[i][1..].map(it.split(' ').map(it.u64()))
 	}
-	for i := 0; i < seeds_2.len - 1; i += 2 {
-		end := seeds_2[i] + seeds_2[i + 1] - 1
-		for start := seeds_2[i]; start <= end; start++ {
-			mut copy := start
-			for mapx in maps {
-				for line in mapx {
-					if copy >= line[1] && copy < line[1] + line[2] {
-						copy = line[0] + copy - line[1]
-						break
+	for mapx in maps {
+		mut sub_ranges := [][]u64{}
+		for ranges.len != 0 {
+			item := ranges.pop()
+			start := item[0]
+			end := item[1]
+			mut found := false
+			for line in mapx {
+				ovs := math.max(start, line[1])
+				oe := math.min(end, line[1] + line[2])
+				if ovs < oe {
+					found = true
+					sub_ranges << [ovs - line[1] + line[0], oe - line[1] + line[0]]
+					if ovs > start {
+						ranges << [start, ovs]
 					}
+					if end > oe {
+						ranges << [oe, end]
+					}
+					break
 				}
 			}
-			part_2_min = math.min(part_2_min, copy)
+			if !found {
+				sub_ranges << [start, end]
+			}
 		}
+		ranges = sub_ranges.clone()
 	}
-	println('Part 2: ${part_2_min}')
+	smallest := ranges.map(it[0]).sorted()[0]
+	println('Part 2: ${smallest}')
 }
