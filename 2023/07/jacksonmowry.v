@@ -66,43 +66,27 @@ fn solver(filename string, part_2 bool) !int {
 		}
 		lines[i] << score_hand(freq)
 	}
+	mut some_map := card_to_val_2.clone()
 	if part_2 {
-		lines.sort_with_compare(fn (mut a []string, mut b []string) int {
-			if a[2] < b[2] {
-				return -1
-			} else if a[2] > b[2] {
-				return 1
-			}
-			for i := 0; i < 5; i++ {
-				if card_to_val_2[a[0][i]] == card_to_val_2[b[0][i]] {
-					continue
-				} else if card_to_val_2[a[0][i]] < card_to_val_2[b[0][i]] {
-					return -1
-				} else {
-					return 1
-				}
-			}
-			return 0
-		})
-	} else {
-		lines.sort_with_compare(fn (mut a []string, mut b []string) int {
-			if a[2] < b[2] {
-				return -1
-			} else if a[2] > b[2] {
-				return 1
-			}
-			for i := 0; i < 5; i++ {
-				if card_to_val[a[0][i]] == card_to_val[b[0][i]] {
-					continue
-				} else if card_to_val[a[0][i]] < card_to_val[b[0][i]] {
-					return -1
-				} else {
-					return 1
-				}
-			}
-			return 0
-		})
+		some_map = card_to_val.clone()
 	}
+	lines.sort_with_compare(fn [some_map] (mut a []string, mut b []string) int {
+		if a[2] < b[2] {
+			return -1
+		} else if a[2] > b[2] {
+			return 1
+		}
+		for i := 0; i < 5; i++ {
+			if some_map[a[0][i]] == some_map[b[0][i]] {
+				continue
+			} else if some_map[a[0][i]] < some_map[b[0][i]] {
+				return -1
+			} else {
+				return 1
+			}
+		}
+		return 0
+	})
 	mut sum := 0
 	for i := 0; i < lines.len; i++ {
 		sum += lines[i][1].int() * (i + 1)
