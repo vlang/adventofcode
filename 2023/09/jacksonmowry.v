@@ -9,24 +9,22 @@ fn main() {
 	lines := os.read_lines('mirage_maintenance.input')!.map(it.split(' ').map(it.int()))
 
 	for line in lines {
-		forward += (next_value(line, false))
-		backward += (next_value(line, true))
+		front, back := next_value(line)
+		backward += front
+		forward += back
 	}
 	println('Part 1: ${forward}')
 	println('Part 2: ${backward}')
 }
 
-fn next_value(input []int, part_2 bool) int {
+fn next_value(input []int) (int, int) {
 	if input.all(it == 0) {
-		return 0
+		return 0, 0
 	}
 	mut diff := []int{}
 	for i := 0; i < input.len - 1; i++ {
 		diff << input[i + 1] - input[i]
 	}
-	if part_2 {
-		return input.first() - next_value(diff, part_2)
-	} else {
-		return input.last() + next_value(diff, part_2)
-	}
+	front, back := next_value(diff)
+	return input.first() - front, input.last() + back
 }
