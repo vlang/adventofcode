@@ -1,6 +1,7 @@
 module main
 
 import os
+import arrays
 
 fn main() {
 	mut forward := 0
@@ -21,10 +22,9 @@ fn next_value(input []int) (int, int) {
 	if input.all(it == 0) {
 		return 0, 0
 	}
-	mut diff := []int{}
-	for i := 0; i < input.len - 1; i++ {
-		diff << input[i + 1] - input[i]
-	}
-	front, back := next_value(diff)
+	diffs := arrays.flat_map_indexed[int, int](input, fn [input] (i int, e int) []int {
+		return [input[i + 1] or { return [] } - input[i]]
+	})
+	front, back := next_value(diffs)
 	return input.first() - front, input.last() + back
 }
