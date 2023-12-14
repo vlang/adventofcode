@@ -38,3 +38,7 @@ running `v run verify.v` in the top folder of this repository.
 It will produce the necessary `.out` files for new solutions, and you
 can commit them so that the CI will check that there are no
 regressions.
+
+# Leaderboard
+
+Feel free to join the vlang leaderboard: `1303110-4f92d16a`.
