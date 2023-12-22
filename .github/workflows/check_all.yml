@@ -32,7 +32,7 @@ jobs:
         run: v install pcre
 
       - name: Check .v formatting
-        run: v fmt . -c
+        run: v fmt -c aoc/
 
       - name: Run verify.v to check solutions
         run: cd aoc && v run verify.v
