@@ -15,7 +15,7 @@ fn main() {
 
 fn solver(filename string, part_2 bool) !i64 {
 	directions, nodes := os.read_file(filename)!.split_once('\n\n') or {
-		return error('Failed to derive nodes from file name')
+		return error('Failed to derive nodes from "${filename}"')
 	}
 	node_lines := nodes.split_into_lines()
 	mut node_map := map[string]Node{}
