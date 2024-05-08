@@ -1,10 +1,7 @@
 import os
 import v.util.diff
-import rand
 import time
 import term
-
-const diff_cmd = diff.find_working_diff_command() or { '' }
 
 const wd = os.getwd()
 
@@ -138,7 +135,7 @@ fn main() {
 			eprintln('v_file: ${v_file}')
 			eprintln('current output:\n${output}')
 			eprintln('  known output:\n${known}')
-			eprintln(diff.color_compare_strings(diff_cmd, rand.ulid(), output, known))
+			eprintln(diff.compare_text(output, known)!)
 			erroring_files << v_file
 		}
 	}
