@@ -28,7 +28,7 @@ fn (s [][]string) power() int {
 	}
 	return arrays.reduce(arr, fn (t1 int, t2 int) int {
 		return t1 * t2
-	}) or {}
+	}) or { 0 }
 }
 
 fn part_1(input []string) int {
