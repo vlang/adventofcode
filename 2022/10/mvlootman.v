@@ -42,6 +42,6 @@ fn parse(line string) Instruction {
 
 	return Instruction{
 		kind: parts[0]
-		val: val
+		val:  val
 	}
 }

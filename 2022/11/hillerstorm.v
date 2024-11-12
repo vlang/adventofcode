@@ -81,10 +81,10 @@ fn parse_monkeys(input []string) ([]Monkey, int) {
 		product *= div_by
 
 		monkeys[i] = Monkey{
-			items: num_regex.find_all_str(lines[1]).map(it.i64())
-			operation: &operation
-			div_by: div_by
-			monkey_if_true: num_regex.find_all_str(lines[4]).first().int()
+			items:           num_regex.find_all_str(lines[1]).map(it.i64())
+			operation:       &operation
+			div_by:          div_by
+			monkey_if_true:  num_regex.find_all_str(lines[4]).first().int()
 			monkey_if_false: num_regex.find_all_str(lines[5]).first().int()
 		}
 	}

@@ -20,10 +20,10 @@ fn main() {
 		for col, symbol in line {
 			if symbol == `#` {
 				coord_pairs << Point{
-					o_row: row
-					o_col: col
-					row: row
-					col: col
+					o_row:  row
+					o_col:  col
+					row:    row
+					col:    col
 					row_p2: row
 					col_p2: col
 				}

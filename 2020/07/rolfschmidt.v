@@ -53,7 +53,7 @@ fn d7_parse_shiny_bags(bag_data string) []D7Bag {
 			}
 			name := inner_bag.replace(' bags', '').replace(' bag', '')[2..]
 			inner_bags << D7Bag{
-				name: name
+				name:  name
 				count: inner_bag[0..2].int()
 			}
 		}

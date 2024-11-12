@@ -10,8 +10,8 @@ mut:
 fn new_fs() FileSystem {
 	return FileSystem{
 		current_node: 0
-		nodes: [DirNode{
-			name: '/'
+		nodes:        [DirNode{
+			name:   '/'
 			parent: none
 		}]
 	}

@@ -70,8 +70,8 @@ fn parse_sensor(line string, mut num_regex RE) &Sensor {
 	x, y, beacon_x, beacon_y := digits[0], digits[1], digits[2], digits[3]
 
 	return &Sensor{
-		x: x
-		y: y
+		x:        x
+		y:        y
 		beacon_x: beacon_x
 		beacon_y: beacon_y
 		distance: abs(x - beacon_x) + abs(y - beacon_y)

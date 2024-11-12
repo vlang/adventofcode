@@ -40,7 +40,7 @@ fn (mut p D3Map) tree_count(addx int, addy int) u64 {
 
 fn d3_parse_map(day_map []string) D3Map {
 	return D3Map{
-		map: day_map
+		map:  day_map
 		posx: 0
 		posy: 0
 	}

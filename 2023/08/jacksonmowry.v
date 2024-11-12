@@ -24,7 +24,7 @@ fn solver(filename string, part_2 bool) !i64 {
 		split_up := node.split(' = ') // 0 => node name
 		coord := split_up[1].split_any('(,)').filter(it != '').map(it.trim_space()) // 0 => left, 1 => right
 		node_map[split_up[0]] = Node{
-			left: coord[0]
+			left:  coord[0]
 			right: coord[1]
 		}
 		if split_up[0][split_up[0].len - 1] == `A` && part_2 {

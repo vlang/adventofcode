@@ -20,10 +20,10 @@ fn main() {
 		.map(fn [joker_labels] (line []string) Player {
 			runes := line[0].runes()
 			return Player{
-				raw_hand: line[0]
-				hand_rank: rank_hand(runes)
+				raw_hand:              line[0]
+				hand_rank:             rank_hand(runes)
 				hand_rank_with_jokers: rank_with_jokers(runes, joker_labels#[..-1])
-				bet: line[1].int()
+				bet:                   line[1].int()
 			}
 		})
 

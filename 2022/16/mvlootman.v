@@ -48,8 +48,8 @@ fn parse_valve(line string, re regex.RE) Valve {
 		.map(line[it.start..it.end])
 
 	return Valve{
-		node: matches[0]
-		rate: matches[1].int()
+		node:        matches[0]
+		rate:        matches[1].int()
 		connections: matches[2].split(',').map(it.trim_space())
 	}
 }

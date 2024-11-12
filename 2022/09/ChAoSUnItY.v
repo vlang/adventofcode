@@ -99,7 +99,7 @@ fn process_data(data string) []Instruction {
 		line_segment := line.split(' ')
 		return Instruction{
 			direction: line_segment[0][0]
-			steps: line_segment[1].int()
+			steps:     line_segment[1].int()
 		}
 	})
 }

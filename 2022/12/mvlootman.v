@@ -49,11 +49,11 @@ fn new(lines []string) HillMap {
 	grid[end_pos.y][end_pos.x] = `z` // end E -> elevation `z`
 
 	hill_map := HillMap{
-		width: width
-		height: height
-		grid: grid
+		width:     width
+		height:    height
+		grid:      grid
 		start_pos: start_pos
-		end_pos: end_pos
+		end_pos:   end_pos
 	}
 
 	return hill_map
@@ -71,8 +71,8 @@ fn (h HillMap) visit_adjacent(x int, y int, part1 bool) int {
 
 	stack.push(Coordinate{
 		dist: 0
-		x: h.start_pos.x
-		y: h.start_pos.y
+		x:    h.start_pos.x
+		y:    h.start_pos.y
 	})
 
 	for {

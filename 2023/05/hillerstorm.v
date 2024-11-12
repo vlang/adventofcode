@@ -29,13 +29,13 @@ fn main() {
 	parts := os.read_file('seed_map.input')!.split('\n\n')
 	seeds := parts[0].split(': ')[1].split(' ').map(it.u64())
 	range_maps := RangeMaps{
-		seed_to_soil: map_ranges(parts[1])
-		soil_to_fertilizer: map_ranges(parts[2])
-		fertilizer_to_water: map_ranges(parts[3])
-		water_to_light: map_ranges(parts[4])
-		light_to_temperature: map_ranges(parts[5])
+		seed_to_soil:            map_ranges(parts[1])
+		soil_to_fertilizer:      map_ranges(parts[2])
+		fertilizer_to_water:     map_ranges(parts[3])
+		water_to_light:          map_ranges(parts[4])
+		light_to_temperature:    map_ranges(parts[5])
 		temperature_to_humidity: map_ranges(parts[6])
-		humidity_to_location: map_ranges(parts[7])
+		humidity_to_location:    map_ranges(parts[7])
 	}
 
 	part_one := solve(seeds.map(&Range{it, 1}), range_maps)!
@@ -75,7 +75,7 @@ fn find_mapped_value(value []&Range, ranges []&RangeMap) []&Range {
 				&& value_range.start + value_range.length <= range.source_start + range.length {
 				// value falls completely within range
 				result << &Range{
-					start: range.dest_start + value_range.start - range.source_start
+					start:  range.dest_start + value_range.start - range.source_start
 					length: value_range.length
 				}
 
@@ -85,11 +85,11 @@ fn find_mapped_value(value []&Range, ranges []&RangeMap) []&Range {
 				&& value_range.start < range.source_start + range.length {
 				// value starts within range but ends outside of it
 				result << &Range{
-					start: range.dest_start + value_range.start - range.source_start
+					start:  range.dest_start + value_range.start - range.source_start
 					length: range.source_start + range.length - value_range.start
 				}
 				queue << &Range{
-					start: range.source_start + range.length
+					start:  range.source_start + range.length
 					length: value_range.length - (range.source_start + range.length - value_range.start)
 				}
 
@@ -99,11 +99,11 @@ fn find_mapped_value(value []&Range, ranges []&RangeMap) []&Range {
 				&& value_range.start + value_range.length > range.source_start {
 				// value starts before the range but ends within it
 				queue << &Range{
-					start: value_range.start
+					start:  value_range.start
 					length: range.source_start - value_range.start
 				}
 				result << &Range{
-					start: range.dest_start
+					start:  range.dest_start
 					length: value_range.length - (range.source_start - value_range.start)
 				}
 
@@ -113,15 +113,15 @@ fn find_mapped_value(value []&Range, ranges []&RangeMap) []&Range {
 				&& value_range.start + value_range.length >= range.source_start + range.length {
 				// value starts before the range and ends after it
 				queue << &Range{
-					start: value_range.start
+					start:  value_range.start
 					length: range.source_start - value_range.start
 				}
 				result << &Range{
-					start: range.dest_start
+					start:  range.dest_start
 					length: range.length
 				}
 				queue << &Range{
-					start: range.source_start + range.length
+					start:  range.source_start + range.length
 					length: value_range.start + value_range.length - range.length
 				}
 
@@ -146,7 +146,7 @@ fn map_ranges(value string) []&RangeMap {
 fn map_range(values []u64) &RangeMap {
 	return &RangeMap{
 		source_start: values[1]
-		dest_start: values[0]
-		length: values[2]
+		dest_start:   values[0]
+		length:       values[2]
 	}
 }

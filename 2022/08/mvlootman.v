@@ -26,8 +26,8 @@ fn new_grid(lines []string) Grid {
 
 	return Grid{
 		height: lines.len
-		width: lines[0].len
-		grid: grid
+		width:  lines[0].len
+		grid:   grid
 	}
 }
 

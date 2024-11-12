@@ -101,8 +101,8 @@ fn parse_sensor(line string) Sensor {
 	numbers := re.find_all_str(line).map(it.int())
 
 	return Sensor{
-		x: numbers[0]
-		y: numbers[1]
+		x:        numbers[0]
+		y:        numbers[1]
 		beacon_x: numbers[2]
 		beacon_y: numbers[3]
 		distance: distance(numbers[0], numbers[1], numbers[2], numbers[3])

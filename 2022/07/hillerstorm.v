@@ -12,7 +12,7 @@ fn main() {
 
 	mut directories := {
 		'/': Directory{
-			name: '/'
+			name:   '/'
 			parent: ''
 		}
 	}
@@ -82,7 +82,7 @@ fn main() {
 
 fn add_directory(mut directories map[string]Directory, mut sub_directories map[string][]string, parent &Directory, name string) Directory {
 	dir := Directory{
-		name: name
+		name:   name
 		parent: parent.name
 	}
 	directories[name] = dir

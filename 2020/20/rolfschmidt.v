@@ -25,7 +25,7 @@ fn (tile Tile) clone() Tile {
 fn (tile Tile) flip() Tile {
 	return Tile{
 		number: tile.number
-		data: tile.data.map(it.clone().reverse())
+		data:   tile.data.map(it.clone().reverse())
 	}
 }
 
@@ -137,7 +137,7 @@ fn d20_run(part2 bool) u64 {
 		image := block.all_after(':\n').split('\n').map(it.split(''))
 		tile := Tile{
 			number: tn
-			data: image
+			data:   image
 		}
 		if i == 0 {
 			add_result(mut rm, 0, 0, tile)

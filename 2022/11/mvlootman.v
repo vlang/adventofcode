@@ -113,13 +113,13 @@ fn parse_monkey(monkey_lines []string) Monkey {
 	throw_to_if_true := number_regex.find_all_str(monkey_lines[5]).first().int()
 
 	return Monkey{
-		id: id
-		items: items
-		operation_op: operation_op
-		operation_val: operation_val
+		id:                id
+		items:             items
+		operation_op:      operation_op
+		operation_val:     operation_val
 		divisible_by_test: div_by_test
-		throw_false: throw_to_if_false
-		throw_true: throw_to_if_true
+		throw_false:       throw_to_if_false
+		throw_true:        throw_to_if_true
 	}
 }
 
