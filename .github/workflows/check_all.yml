@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
   schedule:
-    - cron: '31 17 * * *'
+    - cron: '31 17 * 1,12 *'
 
 jobs:
   works-on-latest-v-and-ubuntu:
@@ -21,10 +21,10 @@ jobs:
           repository: vlang/v
 
       - name: Build V
-        run: make && ./v symlink -githubci
+        run: make && ./v symlink
 
       - name: Checkout V AoC repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: aoc
 

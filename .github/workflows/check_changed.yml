@@ -19,7 +19,7 @@ jobs:
           repository: vlang/v
 
       - name: Build V
-        run: make && ./v symlink -githubci
+        run: make && ./v symlink
 
       - name: Checkout V AoC repo
         uses: actions/checkout@v4
