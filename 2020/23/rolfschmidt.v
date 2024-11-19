@@ -86,19 +86,3 @@ fn read_day_string(path string) string {
 	mut data := os.read_file(path) or { panic(err) }
 	return data.trim(' \n\t\v\f\r')
 }
-
-// returns min value of int
-fn int_min(a int, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-// returns max value of int
-fn int_max(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}

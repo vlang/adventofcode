@@ -116,19 +116,3 @@ fn read_day_string(path string) string {
 fn read_day(path string) []string {
 	return read_day_string(path).split_into_lines()
 }
-
-// returns min value of int
-fn int_min(a int, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-// returns max value of int
-fn int_max(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}

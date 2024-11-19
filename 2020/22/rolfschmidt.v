@@ -83,14 +83,6 @@ fn aint_index(arr []int) []int {
 	return result
 }
 
-// returns max value of int
-fn int_max(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
 // returns sum value of array int
 fn aint_sum(arr []int) int {
 	mut result := 0
