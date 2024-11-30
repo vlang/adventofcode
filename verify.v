@@ -41,7 +41,7 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 }
 
 fn v_file2out_file(v_file string) string {
-	return os.real_path(os.join_path(wd, 'known_outputs', v_file.replace('.v', '.out')))
+	return os.real_path(os.join_path(wd, 'known', v_file.replace('.v', '.out')))
 }
 
 fn v_file2relative_out_file(v_file string) string {
@@ -66,13 +66,13 @@ fn discover_files() ![]string {
 		dump(changes)
 		files := changes.filter(it.ends_with('.v') && it.starts_with('20'))
 		println('running only a subset of all tests, based on the git diff for the new/changed solutions, compared to the main origin branch: ${files}')
-		flush_stdout()
 		return files
 	}
 
 	glob_pattern := '*' + os.args[1] or { '' } + '*'
 	if glob_pattern == '**' {
-		println('Note: you can also `v run verify.v PATTERN`, where PATTERN can be any part of the .v filepath, like: `v run verify.v 2022` or `v run verify.v Jalon` etc.')
+		println('Note: you can also `v run verify.v PATTERN`, where PATTERN can be any part of the .v filepath,')
+		println('like: `v run verify.v 2022` or `v run verify.v Jalon` etc.')
 	}
 
 	mut v_files := []string{}
@@ -95,6 +95,7 @@ fn discover_files() ![]string {
 }
 
 fn main() {
+	unbuffer_stdout()
 	mut v_files := discover_files()!
 	v_files.sort_with_compare(fn (a &string, b &string) int {
 		xa := a.split('/').map(if it.len == 1 { '0${it}' } else { it }).join('/')
@@ -117,12 +118,11 @@ fn main() {
 		vdir := os.dir(v_file)
 		os.chdir(vdir)!
 
-		print('[${idx + 1:3}/${v_files.len:-3}] checking ${v_file:-25} with ${v_file2relative_out_file(v_file):-40} ...')
-		flush_stdout()
+		short_out_path := v_file2relative_out_file(v_file)#[-40..]
+		print('[${idx + 1:3}/${v_files.len:-3}] checking ${v_file:-30} with ${short_out_path:-38} ...')
 
 		output, compilation_took, running_took := vrun(v_file) or {
 			println('\n>>>>> error: ${err}')
-			flush_stdout()
 			erroring_files << v_file
 			continue
 		}
@@ -130,9 +130,11 @@ fn main() {
 		total_running_time = total_running_time + running_took
 		ctook := '${compilation_took.milliseconds():4} ms'
 		rtook := '${running_took.milliseconds():5} ms'
-		norun := if running_took == 0 { term.bright_yellow('norun') } else { '' }
-		println(' took ${term.green(ctook)} to compile, and ${term.bright_green(rtook)} to run. ${norun}')
-		flush_stdout()
+		if running_took == 0 {
+			println(' took ${term.green(ctook)} to compile, ${term.bright_yellow('norun')}.')
+		} else {
+			println(' took ${term.green(ctook)} to compile, and ${term.bright_green(rtook)} to run.')
+		}			
 		total_files++
 
 		known, is_new := vout(v_file, output)!
