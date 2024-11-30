@@ -1,0 +1,21 @@
+467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..
+
+gear_ratio >>> Found `*` at (1, 3).
+gear_ratio >>>    -> Numbers around at: [[0, 2], [2, 2]]
+gear_ratio >>>    -> Multiplying 467 and 35
+gear_ratio >>> Found `*` at (4, 3).
+gear_ratio >>>    -> Numbers around at: [[4, 2]]
+gear_ratio >>>     X not multiplying: digits at [[4, 2]]
+gear_ratio >>> Found `*` at (8, 5).
+gear_ratio >>>    -> Numbers around at: [[7, 6], [9, 5]]
+gear_ratio >>>    -> Multiplying 755 and 598
+Final result: 467835
