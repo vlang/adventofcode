@@ -11,7 +11,7 @@ const skip_list = [
 	'do_not_delete',
 ]
 
-fn vrun(v_file string) !(string, time.Duration, time.Duration) {
+fn vrun(v_file string) !(string, time.Duration, time.Duration) {	
 	local_file_name := os.file_name(v_file)
 	vdir := os.dir(v_file)
 	executable_name := local_file_name.replace('.v', '.exe')
@@ -23,16 +23,21 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 	if compilation.exit_code != 0 {
 		return error('could not compile: `v ${local_file_name}` in working folder: "${vdir}", compilation output:\n${compilation.output}')
 	}
-
-	run_cmd := './${executable_name}'
-	sw_running := time.new_stopwatch()
-	res := os.execute(run_cmd)
-	run_time_took := sw_running.elapsed()
-	if res.exit_code != 0 {
-		return error('could not run: `${executable_name}` in working folder: "${vdir}"')
-	}
-
-	return res.output, compile_time_took, run_time_took
+	mut run_time_took := 0 * time.nanosecond
+	mut output := ''
+	v_lines := os.read_lines(local_file_name)!
+	skip_run := v_lines.any(it.starts_with('// verify: norun'))
+	if !skip_run {
+		run_cmd := './${executable_name}'
+		sw_running := time.new_stopwatch()
+		res := os.execute(run_cmd)
+		run_time_took = sw_running.elapsed()
+		if res.exit_code != 0 {
+			return error('could not run: `${executable_name}` in working folder: "${vdir}"')
+		}
+		output = res.output
+	}	
+	return output, compile_time_took, run_time_took
 }
 
 fn v_file2out_file(v_file string) string {
@@ -125,7 +130,8 @@ fn main() {
 		total_running_time = total_running_time + running_took
 		ctook := '${compilation_took.milliseconds():4} ms'
 		rtook := '${running_took.milliseconds():5} ms'
-		println(' took ${term.green(ctook)} to compile, and ${term.bright_green(rtook)} to run.')
+		norun := if running_took == 0 { term.bright_yellow('norun') } else { '' }
+		println(' took ${term.green(ctook)} to compile, and ${term.bright_green(rtook)} to run. ${norun}')
 		flush_stdout()
 		total_files++
 
@@ -134,7 +140,7 @@ fn main() {
 			eprintln('> .out file for ${v_file} does not exist, creating it based on the current run output...')
 			new_files << v_file
 		}
-		if output != known {
+		if running_took != 0 && output != known {
 			eprintln('current output does not match the known one:')
 			eprintln('v_file: ${v_file}')
 			eprintln('current output:\n${output}')

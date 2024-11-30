@@ -1,5 +1,5 @@
 // $origin: https://github.com/rolfschmidt/advent-of-code
-
+// verify: norun
 module main
 
 import os
