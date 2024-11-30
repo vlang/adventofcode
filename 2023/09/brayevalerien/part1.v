@@ -5,7 +5,7 @@ import math
 import arrays
 
 fn main() {
-	input_path := 'mirage_maintenance.input'
+	input_path := '../mirage_maintenance.input'
 
 	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
 	mut sum := 0

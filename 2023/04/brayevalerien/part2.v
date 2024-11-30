@@ -5,7 +5,7 @@ import arrays
 import math
 
 fn main() {
-	input_path := 'scratchcards.input'
+	input_path := '../scratchcards.input'
 
 	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
 	mut copies := []int{len: lines.len, init: 1} // number of remaining copies per card

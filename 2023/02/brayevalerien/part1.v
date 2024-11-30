@@ -53,7 +53,7 @@ fn is_valid(game Game) bool {
 }
 
 fn main() {
-	input_path := 'cube.input'
+	input_path := '../cube.input'
 
 	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
 	mut result := 0

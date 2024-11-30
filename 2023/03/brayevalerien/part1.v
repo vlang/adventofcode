@@ -188,7 +188,7 @@ fn (mut cursor Cursor) get_sum() int {
 }
 
 fn main() {
-	input_path := 'schematic.input'
+	input_path := '../schematic.input'
 
 	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
 	schematic := Schematic.new(lines)

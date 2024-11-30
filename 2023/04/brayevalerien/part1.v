@@ -4,7 +4,7 @@ import os
 import math
 
 fn main() {
-	input_path := 'scratchcards.input'
+	input_path := '../scratchcards.input'
 
 	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
 	mut sum := 0 // will contain the final result

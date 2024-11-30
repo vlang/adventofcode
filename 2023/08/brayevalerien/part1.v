@@ -3,7 +3,7 @@ module main
 import os
 
 fn main() {
-	input_path := 'haunted_wasteland-part1.input'
+	input_path := '../haunted_wasteland-part1.input'
 
 	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
 	sequence := Sequence{lines[0].split(''), 0}
