@@ -26,8 +26,8 @@ fn Schematic.new(lines []string) Schematic {
 		panic('Cannot build grid from input with empty first line.')
 	}
 	return Schematic{
-		grid: lines
-		width: lines[0].len
+		grid:   lines
+		width:  lines[0].len
 		height: lines.len
 	}
 }
@@ -35,8 +35,8 @@ fn Schematic.new(lines []string) Schematic {
 fn Cursor.new(schematic Schematic) Cursor {
 	return Cursor{
 		schematic: schematic
-		x: 0
-		y: 0
+		x:         0
+		y:         0
 	}
 }
 

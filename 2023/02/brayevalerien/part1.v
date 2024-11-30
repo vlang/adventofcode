@@ -37,10 +37,10 @@ fn Game.new(s string) Game {
 		blue = math.max(blue, count_blue)
 	}
 	return Game{
-		id: id.int()
-		red: red
+		id:    id.int()
+		red:   red
 		green: green
-		blue: blue
+		blue:  blue
 	}
 }
 

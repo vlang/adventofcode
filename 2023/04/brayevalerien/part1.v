@@ -50,5 +50,5 @@ fn card_value(winning []int, nums []int) int {
 	if matched == 0 {
 		return 0
 	}
-	return int(math.pow(2, matched-1))
+	return int(math.pow(2, matched - 1))
 }
