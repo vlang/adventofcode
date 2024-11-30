@@ -15,3 +15,5 @@ bin/
 .idea/
 .vscode/
 *.iml
+verify
+verify.exe
