@@ -11,7 +11,7 @@ const skip_list = [
 	'do_not_delete',
 ]
 
-fn vrun(v_file string) !(string, time.Duration, time.Duration) {	
+fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 	local_file_name := os.file_name(v_file)
 	vdir := os.dir(v_file)
 	executable_name := local_file_name.replace('.v', '.exe')
@@ -36,7 +36,7 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 			return error('could not run: `${executable_name}` in working folder: "${vdir}"')
 		}
 		output = res.output
-	}	
+	}
 	return output, compile_time_took, run_time_took
 }
 
