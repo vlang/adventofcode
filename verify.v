@@ -16,15 +16,17 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 	vdir := os.dir(v_file)
 	executable_name := local_file_name.replace('.v', '.exe')
 
+	compilation_cmd := '${vexe} -o ${executable_name} ${local_file_name}'
 	sw_compilation := time.new_stopwatch()
-	compilation := os.execute('${vexe} -o ${executable_name} ${local_file_name}')
+	compilation := os.execute(compilation_cmd)
 	compile_time_took := sw_compilation.elapsed()
 	if compilation.exit_code != 0 {
 		return error('could not compile: `v ${local_file_name}` in working folder: "${vdir}", compilation output:\n${compilation.output}')
 	}
 
+	run_cmd := './${executable_name}'
 	sw_running := time.new_stopwatch()
-	res := os.execute('./${executable_name}')
+	res := os.execute(run_cmd)
 	run_time_took := sw_running.elapsed()
 	if res.exit_code != 0 {
 		return error('could not run: `${executable_name}` in working folder: "${vdir}"')
@@ -99,6 +101,7 @@ fn main() {
 	mut new_files := []string{}
 	mut total_compilation_time := time.Duration(0)
 	mut total_running_time := time.Duration(0)
+	mut total_files := 0
 	for idx, v_file in v_files {
 		os.chdir(wd)!
 		if !os.exists(v_file) {
@@ -124,6 +127,7 @@ fn main() {
 		rtook := '${running_took.milliseconds():5} ms'
 		println(' took ${term.green(ctook)} to compile, and ${term.bright_green(rtook)} to run.')
 		flush_stdout()
+		total_files++
 
 		known, is_new := vout(v_file, output)!
 		if is_new {
@@ -141,7 +145,7 @@ fn main() {
 	}
 	ctook := '${total_compilation_time.milliseconds():6} ms'
 	rtook := '${total_running_time.milliseconds():6} ms'
-	println('Total compilation time: ${term.green(ctook)} ; Total running time: ${term.bright_green(rtook)}')
+	println('Total compilation time: ${term.green(ctook)} ; Total running time: ${term.bright_green(rtook)} ; Total files: ${term.bright_white(total_files.str())} .')
 
 	if erroring_files.len > 0 {
 		eprintln('Total files with errors: ${erroring_files.len}')
