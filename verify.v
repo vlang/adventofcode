@@ -134,7 +134,7 @@ fn main() {
 			println(' took ${term.green(ctook)} to compile, ${term.bright_yellow('norun')}.')
 		} else {
 			println(' took ${term.green(ctook)} to compile, and ${term.bright_green(rtook)} to run.')
-		}			
+		}
 		total_files++
 
 		known, is_new := vout(v_file, output)!
