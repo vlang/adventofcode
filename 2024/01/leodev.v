@@ -17,7 +17,7 @@ fn main() {
 	right.sort()
 
 	mut total := 0
-	for i in 0..left.len {
+	for i in 0 .. left.len {
 		mut dis := left[i] - right[i]
 		if dis < 0 {
 			dis = -dis
@@ -26,15 +26,14 @@ fn main() {
 		total += dis
 	}
 
-	println('part1: $total')
+	println('part1: ${total}')
 
 	mut similarity := 0
-	for i in 0..left.len {
+	for i in 0 .. left.len {
 		// we dont have array.count
 		occurences := right.filter(it == left[i])
 		similarity += left[i] * occurences.len
 	}
 
-	println('part2: $similarity')
+	println('part2: ${similarity}')
 }
-
