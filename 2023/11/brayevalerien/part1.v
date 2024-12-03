@@ -4,9 +4,7 @@ import os
 import math
 
 fn main() {
-	input_path := '../stargazing.input'
-
-	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
+	lines := os.get_lines()
 	mut cosmos := Cosmos.new(lines)
 	cosmos.expand()
 	cosmos.locate_galaxies()
