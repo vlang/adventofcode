@@ -8,8 +8,8 @@ fn main() {
 	mut first_numbers := []u32{}
 	mut second_numbers := []u32{}
 
-	for i in 0..lines.len {
-		numbers := lines[i].split("   ")
+	for i in 0 .. lines.len {
+		numbers := lines[i].split('   ')
 
 		first_numbers << u32(strconv.parse_uint(numbers[0], 10, 32)!)
 		second_numbers << u32(strconv.parse_uint(numbers[1], 10, 32)!)
@@ -20,7 +20,7 @@ fn main() {
 
 	mut total := 0
 
-	for i in 0..lines.len {
+	for i in 0 .. lines.len {
 		mut distance := i32(first_numbers[i] - second_numbers[i])
 		if distance < 0 {
 			distance = -distance
@@ -40,4 +40,3 @@ fn main() {
 
 	println('part2: ${similarity}')
 }
-
