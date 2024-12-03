@@ -15,6 +15,15 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 	local_file_name := os.file_name(v_file)
 	vdir := os.dir(v_file)
 	executable_name := local_file_name.replace('.v', '.exe')
+	mut input_files := []string{}
+	input_files << os.walk_ext('.', '.input')
+	if input_files.len == 0 {
+		input_files << os.walk_ext('..', '.input')
+	}
+	if input_files.len == 0 {
+		eprintln('there should be *at least* 1 .input file in the folder ${vdir}, or in its parent folder.')
+		return error('missing .input file')
+	}
 
 	compilation_cmd := '${vexe} -o ${executable_name} ${local_file_name}'
 	sw_compilation := time.new_stopwatch()
@@ -28,7 +37,11 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 	v_lines := os.read_lines(local_file_name)!
 	skip_run := v_lines.any(it.starts_with('// verify: norun'))
 	if !skip_run {
-		run_cmd := './${executable_name}'
+		input_file := find_proper_input_file(input_files, v_file)
+		run_cmd := './${executable_name} < ${input_file}'
+		$if trace_input_selection ? {
+			println('\n>> v_file: ${v_file} | input_files: ${input_files} | input_file: ${input_file}')
+		}
 		sw_running := time.new_stopwatch()
 		res := os.execute(run_cmd)
 		run_time_took = sw_running.elapsed()
@@ -38,6 +51,17 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 		output = res.output
 	}
 	return output, compile_time_took, run_time_took
+}
+
+fn find_proper_input_file(input_files []string, v_file string) string {
+	mut input_file := input_files.first()
+	if v_file.ends_with('part1.v') {
+		input_file = input_files.filter(it.ends_with('part1.input'))[0] or { input_file }
+	}
+	if v_file.ends_with('part2.v') {
+		input_file = input_files.filter(it.ends_with('part2.input'))[0] or { input_file }
+	}
+	return input_file
 }
 
 fn v_file2out_file(v_file string) string {
