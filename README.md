@@ -39,6 +39,19 @@ It will produce the necessary `.out` files for new solutions, and you
 can commit them so that the CI will check that there are no
 regressions.
 
+## Naming convention for solutions that are split in 2 .v files for each part.
+
+The `verify.v` script, supports passing the input files as stdin to your programs.
+
+1. If you name your solution with a suffix part1.v, then it will get the
+input file, that ends with part1.input in its stdin.
+2. If you name your solution with a suffix part2.v, then it will get the
+input file, that ends with part2.input in its stdin.
+3. In any other case, or if a matching input file is not found, you will
+get the first .input file in your stdin, no matter how it was named.
+
+Note: you can use `lines := os.get_raw_lines()` to read the input from stdin.
+
 # Leaderboard
 
 Feel free to join the vlang leaderboard: `1303110-4f92d16a`.

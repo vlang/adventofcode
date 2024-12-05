@@ -15,6 +15,15 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 	local_file_name := os.file_name(v_file)
 	vdir := os.dir(v_file)
 	executable_name := local_file_name.replace('.v', '.exe')
+	mut input_files := []string{}
+	input_files << os.walk_ext('.', '.input')
+	if input_files.len == 0 {
+		input_files << os.walk_ext('..', '.input')
+	}
+	if input_files.len == 0 {
+		eprintln('there should be *at least* 1 .input file in the folder ${vdir}, or in its parent folder.')
+		return error('missing .input file')
+	}
 
 	compilation_cmd := '${vexe} -o ${executable_name} ${local_file_name}'
 	sw_compilation := time.new_stopwatch()
@@ -28,7 +37,11 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 	v_lines := os.read_lines(local_file_name)!
 	skip_run := v_lines.any(it.starts_with('// verify: norun'))
 	if !skip_run {
-		run_cmd := './${executable_name}'
+		input_file := find_proper_input_file(input_files, v_file)
+		run_cmd := './${executable_name} < ${input_file}'
+		$if trace_input_selection ? {
+			println('\n>> v_file: ${v_file} | input_files: ${input_files} | input_file: ${input_file}')
+		}
 		sw_running := time.new_stopwatch()
 		res := os.execute(run_cmd)
 		run_time_took = sw_running.elapsed()
@@ -38,6 +51,17 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 		output = res.output
 	}
 	return output, compile_time_took, run_time_took
+}
+
+fn find_proper_input_file(input_files []string, v_file string) string {
+	mut input_file := input_files.first()
+	if v_file.ends_with('part1.v') {
+		input_file = input_files.filter(it.ends_with('part1.input'))[0] or { input_file }
+	}
+	if v_file.ends_with('part2.v') {
+		input_file = input_files.filter(it.ends_with('part2.input'))[0] or { input_file }
+	}
+	return input_file
 }
 
 fn v_file2out_file(v_file string) string {
@@ -94,7 +118,20 @@ fn discover_files() ![]string {
 	return v_files
 }
 
+fn rm_gitkeep_sibling(sibling_file string) {
+	keep_file := os.join_path(os.dir(sibling_file), '.gitkeep')
+	if os.exists(keep_file) {
+		os.rm(keep_file) or {}
+	}
+}
+
+fn cleanup_gitkeep_files(v_file string) {
+	rm_gitkeep_sibling(v_file)
+	rm_gitkeep_sibling(v_file2out_file(v_file))
+}
+
 fn main() {
+	start_time := time.now()
 	unbuffer_stdout()
 	mut v_files := discover_files()!
 	v_files.sort_with_compare(fn (a &string, b &string) int {
@@ -110,6 +147,7 @@ fn main() {
 	mut total_files := 0
 	for idx, v_file in v_files {
 		os.chdir(wd)!
+		cleanup_gitkeep_files(v_file)
 		if !os.exists(v_file) {
 			// in the case of a CI diff, the file may have been deleted
 			eprintln('> skipping missing file ${v_file}')
@@ -153,7 +191,8 @@ fn main() {
 	}
 	ctook := '${total_compilation_time.milliseconds():6} ms'
 	rtook := '${total_running_time.milliseconds():6} ms'
-	println('Total compilation time: ${term.green(ctook)} ; Total running time: ${term.bright_green(rtook)} ; Total files: ${term.bright_white(total_files.str())} .')
+	ttook := '${(time.now() - start_time).milliseconds():6} ms'
+	println('Total time: ${term.magenta(ttook)} ; Total compilation time: ${term.green(ctook)} ; Total running time: ${term.bright_green(rtook)} ; Total files: ${term.bright_white(total_files.str())} .')
 
 	if erroring_files.len > 0 {
 		eprintln('Total files with errors: ${erroring_files.len}')

@@ -4,9 +4,7 @@ import os
 import math
 
 fn main() {
-	input_path := '../haunted_wasteland-part2.input'
-
-	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
+	lines := os.get_raw_lines()
 	sequence := Sequence{lines[0].split(''), 0}
 	network := build_network(lines[2..])
 	res := traverse_network(network, sequence)

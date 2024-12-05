@@ -3,9 +3,7 @@ module main
 import os
 
 fn main() {
-	input_path := '../trebuchet-part2.input'
-
-	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
+	lines := os.get_lines()
 	mut sum := 0 // will contain the final result
 	for line in lines {
 		line_nums := get_line_nums(line)

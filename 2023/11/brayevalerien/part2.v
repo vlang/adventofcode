@@ -4,9 +4,7 @@ import os
 import math
 
 fn main() {
-	input_path := '../stargazing.input'
-
-	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
+	lines := os.get_lines()
 	mut cosmos := Cosmos.new(lines)
 	expansion_factor := 1000000 // number of times the empty lines and columns are duplicated
 	cosmos.expand(expansion_factor)

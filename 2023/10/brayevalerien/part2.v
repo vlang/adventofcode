@@ -3,9 +3,7 @@ module main
 import os
 
 fn main() {
-	input_path := '../pipe_maze-part2.input'
-
-	lines := os.read_lines(input_path) or { panic('Could not read input file.') }
+	lines := os.get_lines()
 	terrain := build_terrain(lines)
 	loop := terrain.get_loop()
 	println('Final result: ${terrain.count_inside_loop(loop)}')
