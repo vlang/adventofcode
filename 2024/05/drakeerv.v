@@ -1,7 +1,7 @@
 import os
 import arrays
 
-fn create_inverse_map<T>(arr []T) map[T]int {
+fn create_inverse_map[T](arr []T) map[T]int {
 	mut result := map[T]int{}
 	for i, x in arr {
 		result[x] = i
@@ -11,18 +11,20 @@ fn create_inverse_map<T>(arr []T) map[T]int {
 
 fn main() {
 	data := os.read_file('pages.input')!.split_into_lines()
-	split_index := arrays.index_of_first(data, fn(idx int, x string) bool { return x == "" })
+	split_index := arrays.index_of_first(data, fn (idx int, x string) bool {
+		return x == ''
+	})
 
 	mut rules := [][2]int{}
 	for rule in data[0..split_index] {
-		split := rule.split("|")
+		split := rule.split('|')
 		rules << [split[0].int(), split[1].int()]!
 	}
 
 	mut total1 := 0
 	mut incorect_updates := [][]int{}
-	for update in data[split_index+1..] {
-		pages := update.split(",").map(it.int())
+	for update in data[split_index + 1..] {
+		pages := update.split(',').map(it.int())
 		inverse_map := create_inverse_map(pages)
 
 		mut all_passed := true
@@ -53,7 +55,7 @@ fn main() {
 	}
 
 	println('part1: ${total1}')
-	
+
 	mut total2 := 0
 	for update in incorect_updates {
 		sorted_update := update.sorted_with_compare(fn [rules] (a &int, b &int) int {
