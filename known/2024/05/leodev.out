@@ -1,0 +1,11 @@
+valid: 75,47,61,53,29
+valid: 97,61,53,29,13
+valid: 75,29,13
+75 at 0 must be before 97 at 1
+corrected: [97, 75, 47, 61, 53]
+13 at 1 must be before 29 at 2
+corrected: [61, 29, 13]
+13 at 1 must be before 75 at 2
+corrected: [97, 75, 47, 29, 13]
+part1: 143
+part2: 123
