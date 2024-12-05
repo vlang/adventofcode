@@ -118,7 +118,20 @@ fn discover_files() ![]string {
 	return v_files
 }
 
+fn rm_gitkeep_sibling(sibling_file string) {
+	keep_file := os.join_path(os.dir(sibling_file), '.gitkeep')
+	if os.exists(keep_file) {
+		os.rm(keep_file) or {}
+	}
+}
+
+fn cleanup_gitkeep_files(v_file string) {
+	rm_gitkeep_sibling(v_file)
+	rm_gitkeep_sibling(v_file2out_file(v_file))
+}
+
 fn main() {
+	start_time := time.now()
 	unbuffer_stdout()
 	mut v_files := discover_files()!
 	v_files.sort_with_compare(fn (a &string, b &string) int {
@@ -134,6 +147,7 @@ fn main() {
 	mut total_files := 0
 	for idx, v_file in v_files {
 		os.chdir(wd)!
+		cleanup_gitkeep_files(v_file)
 		if !os.exists(v_file) {
 			// in the case of a CI diff, the file may have been deleted
 			eprintln('> skipping missing file ${v_file}')
@@ -177,7 +191,8 @@ fn main() {
 	}
 	ctook := '${total_compilation_time.milliseconds():6} ms'
 	rtook := '${total_running_time.milliseconds():6} ms'
-	println('Total compilation time: ${term.green(ctook)} ; Total running time: ${term.bright_green(rtook)} ; Total files: ${term.bright_white(total_files.str())} .')
+	ttook := '${(time.now() - start_time).milliseconds():6} ms'
+	println('Total time: ${term.magenta(ttook)} ; Total compilation time: ${term.green(ctook)} ; Total running time: ${term.bright_green(rtook)} ; Total files: ${term.bright_white(total_files.str())} .')
 
 	if erroring_files.len > 0 {
 		eprintln('Total files with errors: ${erroring_files.len}')
