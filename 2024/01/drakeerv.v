@@ -1,5 +1,4 @@
 import os
-import strconv
 import arrays
 
 fn main() {
@@ -11,8 +10,8 @@ fn main() {
 	for i in 0 .. lines.len {
 		numbers := lines[i].split('   ')
 
-		first_numbers << int(strconv.parse_uint(numbers[0], 10, 32)!)
-		second_numbers << int(strconv.parse_uint(numbers[1], 10, 32)!)
+		first_numbers << numbers[0].int()
+		second_numbers << numbers[1].int()
 	}
 
 	first_numbers.sort()
