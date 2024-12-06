@@ -1,0 +1,73 @@
+guard at (6|4); moving up
+guard at (5|4); moving up
+guard at (4|4); moving up
+guard at (3|4); moving up
+guard at (2|4); moving up
+guard at (1|4); moving up
+guard at (1|4); moving right
+guard at (1|5); moving right
+guard at (1|6); moving right
+guard at (1|7); moving right
+guard at (1|8); moving right
+guard at (1|8); moving down
+guard at (2|8); moving down
+guard at (3|8); moving down
+guard at (4|8); moving down
+guard at (5|8); moving down
+guard at (6|8); moving down
+guard at (6|8); moving left
+guard at (6|7); moving left
+guard at (6|6); moving left
+guard at (6|5); moving left
+guard at (6|4); moving left
+obstruction at (6|3) worked
+guard at (6|3); moving left
+guard at (6|2); moving left
+guard at (6|2); moving up
+guard at (5|2); moving up
+guard at (4|2); moving up
+guard at (4|2); moving right
+guard at (4|3); moving right
+guard at (4|4); moving right
+guard at (4|5); moving right
+guard at (4|6); moving right
+guard at (4|6); moving down
+guard at (5|6); moving down
+guard at (6|6); moving down
+obstruction at (7|6) worked
+guard at (7|6); moving down
+guard at (8|6); moving down
+guard at (8|6); moving left
+guard at (8|5); moving left
+guard at (8|4); moving left
+obstruction at (8|3) worked
+guard at (8|3); moving left
+guard at (8|2); moving left
+obstruction at (8|1) worked
+guard at (8|1); moving left
+guard at (8|1); moving up
+guard at (7|1); moving up
+guard at (7|1); moving right
+guard at (7|2); moving right
+guard at (7|3); moving right
+guard at (7|4); moving right
+guard at (7|5); moving right
+guard at (7|6); moving right
+obstruction at (7|7) worked
+guard at (7|7); moving right
+guard at (7|7); moving down
+guard at (8|7); moving down
+obstruction at (9|7) worked
+guard at (9|7); moving down
+....#.....
+....>>>>v#
+....^...v.
+..#.^...v.
+..>>>>v#v.
+..^.^.v.v.
+.#^<<<v<<.
+.>>>>>>v#.
+#^<<<<<v..
+......#v..
+part1: 41
+part2: 6
