@@ -1,4 +1,4 @@
-# adventofcode
+# Advent of code solutions, written in V
 
 A repository for V language solutions to [Advent of Code](https://adventofcode.com/about) puzzles.
 
