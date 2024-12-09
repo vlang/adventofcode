@@ -49,8 +49,7 @@ fn main() {
 			r--
 		}
 		l = r
-		file_type := compact[r] or { panic('impossible') }
-		for l > 0 && compact[l - 1] == file_type {
+		for l > 0 && compact[l - 1] == compact[r] {
 			l--
 		}
 		if l == 0 {
