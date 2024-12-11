@@ -9,7 +9,8 @@ fn halve_string(s string) []i64 {
 fn run(rounds i64) i64 {
     mut check := map[i64]i64{}
 
-    for num in os.read_file('stones.input')!.split(' ') {
+    input := os.read_file('stones.input') or { '' }
+    for num in input.split(' ') {
         check[num.i64()] = 1
     }
 
@@ -42,6 +43,6 @@ fn run(rounds i64) i64 {
 }
 
 fn main() {
-    println(run(25)) 
+    println(run(25))
     println(run(75))
 }
