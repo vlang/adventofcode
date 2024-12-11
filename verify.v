@@ -45,6 +45,7 @@ fn vrun(v_file string) !(string, time.Duration, time.Duration) {
 		sw_running := time.new_stopwatch()
 		res := os.execute(run_cmd)
 		run_time_took = sw_running.elapsed()
+		os.rm(executable_name) or {}
 		if res.exit_code != 0 {
 			return error('could not run: `${executable_name}` in working folder: "${vdir}"')
 		}
