@@ -77,7 +77,7 @@ fn check_cell(mut region &Region, mut visited [][]bool, grid []string, row int, 
 }
 
 fn main() {
-	grid := os.read_lines('puzzle.input')!
+	grid := os.read_lines('garden.input')!
 
 	max_y := grid.len
 	max_x := grid[0].len
