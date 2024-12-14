@@ -4,11 +4,11 @@ struct Region {
 	id rune
 mut:
 	area      i64
-	perimiter []Perimiter
-	sides     []Perimiter
+	perimeter []Perimeter
+	sides     []Perimeter
 }
 
-struct Perimiter {
+struct Perimeter {
 	p Point
 	d Vector
 }
@@ -49,7 +49,7 @@ fn check_cell(mut region &Region, mut visited [][]bool, grid []string, row int, 
 				}
 			} else {
 				// edge detected
-				region.perimiter << Perimiter{
+				region.perimeter << Perimeter{
 					p: Point{
 						y: row
 						x: col
@@ -61,8 +61,8 @@ fn check_cell(mut region &Region, mut visited [][]bool, grid []string, row int, 
 				}
 			}
 		} else {
-			// grid border, add to perimiter
-			region.perimiter << Perimiter{
+			// grid border, add to perimeter
+			region.perimeter << Perimeter{
 				p: Point{
 					y: row
 					x: col
@@ -108,11 +108,11 @@ fn main() {
 	mut price := i64(0)
 	mut price2 := i64(0)
 	for mut r in regions {
-		price += r.area * r.perimiter.len
+		price += r.area * r.perimeter.len
 
-		mut new_set := []Perimiter{}
-		for per in r.perimiter {
-			new_set << Perimiter{
+		mut new_set := []Perimeter{}
+		for per in r.perimeter {
+			new_set << Perimeter{
 				p: Point{
 					y: per.p.y - per.d.dx
 					x: per.p.x + per.d.dy
@@ -120,9 +120,9 @@ fn main() {
 				d: per.d
 			}
 		}
-		r.sides = set_subtract(r.perimiter, new_set)
+		r.sides = set_subtract(r.perimeter, new_set)
 		price2 += r.area * r.sides.len
-		// println('Region: ${r.id} (Area ${r.area}, Perimiter ${r.perimiter.len}, Sides ${r.sides.len})')
+		// println('Region: ${r.id} (Area ${r.area}, Perimeter ${r.perimeter.len}, Sides ${r.sides.len})')
 	}
 	println('Part 1 total price: ${price}')
 	println('Part 2 total price: ${price2}')
