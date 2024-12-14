@@ -6,7 +6,6 @@ mut:
 	area      i64
 	perimiter []Perimiter
 	sides     []Perimiter
-	plots     [][]int
 }
 
 struct Perimiter {
@@ -42,7 +41,6 @@ fn check_cell(mut region &Region, mut visited [][]bool, grid []string, row int, 
 				if !visited[new_row][new_col] {
 					// add to region size
 					region.area += 1
-					region.plots << [new_row, new_col]
 					// mark as visited
 					visited[new_row][new_col] = true
 					// recursive directional search
@@ -100,7 +98,6 @@ fn main() {
 					id:   runes[col]
 					area: 1
 				}
-				region.plots << [row, col]
 				// check for each direction to see if 0) valid 1) unvisited and 2) matching id
 				check_cell(mut region, mut visited, grid, row, col, max_y, max_x)
 				regions << region
