@@ -70,7 +70,7 @@ fn day19b() int {
 
 fn main() {
 	println(day19a())
-	// println(day19b())
+	println(day19b())
 }
 
 // returns a array of the regex matched strings
