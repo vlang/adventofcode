@@ -34,7 +34,7 @@ fn d9_set(lines []u64, find u64) u64 {
 
 fn day09a() u64 {
 	lines := read_day('9.input').map(it.u64())
-	return d9_run(lines, 25)
+	return d9_run(lines, 5)
 }
 
 fn day09b() u64 {
