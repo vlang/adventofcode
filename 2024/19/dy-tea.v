@@ -1,6 +1,6 @@
 import os
 
-const input_file := 'towels.input'
+const input_file = 'towels.input'
 
 fn possible(towels []string, current string, query string, mut visited map[string]bool) bool {
 	if current == query {
