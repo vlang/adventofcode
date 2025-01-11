@@ -27,7 +27,7 @@ fn is_valid_move(row int, col int, max_y int, max_x int) bool {
 	return row >= 0 && row < max_y && col >= 0 && col < max_x
 }
 
-fn check_cell(mut region &Region, mut visited [][]bool, grid []string, row int, col int, max_y int, max_x int) {
+fn check_cell(mut region Region, mut visited [][]bool, grid []string, row int, col int, max_y int, max_x int) {
 	directions := [[0, 1], [0, -1], [1, 0], [-1, 0]]
 	for dir in directions {
 		new_row := row + dir[0]
