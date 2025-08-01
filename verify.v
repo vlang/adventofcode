@@ -3,7 +3,7 @@ import v.util.diff
 import time
 import term
 
-const wd = os.getwd()
+const wd = @DIR
 
 const vexe = @VEXE
 
@@ -132,6 +132,7 @@ fn cleanup_gitkeep_files(v_file string) {
 }
 
 fn main() {
+	os.chdir(wd)!
 	start_time := time.now()
 	unbuffer_stdout()
 	mut v_files := discover_files()!
