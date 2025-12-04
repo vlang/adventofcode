@@ -34,7 +34,7 @@ fn count_adjacent(grid []u8, rows int, cols int, i int, j int, neighbors []Offse
 
 fn main() {
 	// Read input file
-	content := os.read_file('kylepritchard.input') or { panic('Failed to read file: ${err}') }
+	content := os.read_file('department.input') or { panic('Failed to read file: ${err}') }
 	lines := content.split_into_lines()
 
 	mut grid_lines := []string{}
