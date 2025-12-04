@@ -30,7 +30,7 @@ fn max_sequence(s string, k int) string {
 }
 
 fn main() {
-	content := os.read_file('kylepritchard.input') or { panic('Failed to read file: ${err}') }
+	content := os.read_file('banks.input') or { panic('Failed to read file: ${err}') }
 	lines := content.split_into_lines()
 
 	// Part 1
