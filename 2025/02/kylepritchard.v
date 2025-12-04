@@ -38,7 +38,7 @@ fn has_repeating_pattern(s string) bool {
 }
 
 fn main() {
-	content := os.read_file('kylepritchard.input') or { panic('Failed to read file: $err') }
+	content := os.read_file('ids.input') or { panic('Failed to read file: $err') }
 
 	ids := content.split(',')
 
@@ -83,3 +83,4 @@ fn main() {
 	println('Part 1: $sum1')
 	println('Part 2: $sum2')
 }
+
