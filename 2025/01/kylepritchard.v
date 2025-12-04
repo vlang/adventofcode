@@ -4,7 +4,7 @@ import os
 import strconv
 
 fn main() {
-	codes := os.read_file('kylepritchard.input') or { panic('Failed to read file') }
+	codes := os.read_file('rotations.input') or { panic('Failed to read file') }
 
 	mut start := 50
 	mut count := 0
@@ -57,3 +57,4 @@ fn main() {
 	println('Part 1: $count')
 	println('Part 2: $count2')
 }
+
