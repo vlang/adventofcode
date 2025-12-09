@@ -38,7 +38,7 @@ fn has_repeating_pattern(s string) bool {
 }
 
 fn main() {
-	content := os.read_file('ids.input') or { panic('Failed to read file: $err') }
+	content := os.read_file('ids.input') or { panic('Failed to read file: ${err}') }
 
 	ids := content.split(',')
 
@@ -56,12 +56,12 @@ fn main() {
 		end_str := range_parts[1].trim_space()
 
 		start := strconv.parse_int(start_str, 10, 64) or {
-			eprintln('Start number isn\'t valid: "$id"')
+			eprintln('Start number isn\'t valid: "${id}"')
 			continue
 		}
 
 		end := strconv.parse_int(end_str, 10, 64) or {
-			eprintln('End number isn\'t valid: "$id"')
+			eprintln('End number isn\'t valid: "${id}"')
 			continue
 		}
 
@@ -80,8 +80,6 @@ fn main() {
 		}
 	}
 
-	println('Part 1: $sum1')
-	println('Part 2: $sum2')
+	println('Part 1: ${sum1}')
+	println('Part 2: ${sum2}')
 }
-
-

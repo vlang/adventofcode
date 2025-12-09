@@ -54,7 +54,6 @@ fn main() {
 		}
 	}
 
-	println('Part 1: $count')
-	println('Part 2: $count2')
+	println('Part 1: ${count}')
+	println('Part 2: ${count2}')
 }
-
