@@ -48,7 +48,8 @@ fn solve_part2(pairs []Pair) !int {
 
 	packet_start := parse_line('[[2]]')!
 	packet_end := parse_line('[[6]]')!
-	items << [packet_start, packet_end]
+	items << packet_start
+	items << packet_end
 
 	// OrderingState enum values are set specific to sort all right orders on top
 	items.sort_with_compare(fn (a &Item, b &Item) int {
