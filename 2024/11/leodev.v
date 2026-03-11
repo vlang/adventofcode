@@ -11,7 +11,7 @@ fn main() {
 			if stone == 0 {
 				new_stones << 1
 			} else {
-				digits := if stone == 10 { 1 } else { int(math.log10(stone)) }
+				digits := if stone == 10 { 1 } else { int(math.log10(f64(stone))) }
 				if digits % 2 == 1 {
 					power := i64(math.pow(10, digits / 2 + 1))
 					new_stones << stone / power
@@ -56,7 +56,7 @@ fn (mut b Bruteforcer) force(stone i64, rem int) i64 {
 		total = b.force(1, rem - 1)
 	} else {
 		// math.log10(10) is 0.9999999999 and rounds down to 0....
-		digits := if stone == 10 { 1 } else { int(math.log10(stone)) }
+		digits := if stone == 10 { 1 } else { int(math.log10(f64(stone))) }
 		if digits % 2 == 1 {
 			power := i64(math.pow(10, digits / 2 + 1))
 			total = b.force(stone / power, rem - 1) + b.force(stone % power, rem - 1)
