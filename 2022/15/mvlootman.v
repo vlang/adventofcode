@@ -97,7 +97,7 @@ fn pos_cannot_be_unknown_beacon(x int, y int, sensor Sensor) bool {
 }
 
 fn parse_sensor(line string) Sensor {
-	mut re := regex_opt(r'^-?\d+') or { panic(err) }
+	mut re := regex_opt(r'-?\d+') or { panic(err) }
 	numbers := re.find_all_str(line).map(it.int())
 
 	return Sensor{
