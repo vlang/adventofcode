@@ -59,8 +59,10 @@ fn main() {
 	mut total2 := 0
 	for update in incorect_updates {
 		sorted_update := update.sorted_with_compare(fn [rules] (a &int, b &int) int {
-			a_concerned_rules := rules.filter(it[0] == a || it[1] == a)
-			b_concerned_rules := rules.filter(it[0] == b || it[1] == b)
+			aa := *a
+			bb := *b
+			a_concerned_rules := rules.filter(it[0] == aa || it[1] == aa)
+			b_concerned_rules := rules.filter(it[0] == bb || it[1] == bb)
 
 			mut common_rules := [][2]int{}
 			for rule in a_concerned_rules {
@@ -74,7 +76,7 @@ fn main() {
 			}
 
 			common_rule := common_rules[0]
-			if common_rule[0] == a {
+			if common_rule[0] == aa {
 				return -1
 			} else {
 				return 1

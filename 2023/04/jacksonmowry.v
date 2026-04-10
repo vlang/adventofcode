@@ -10,7 +10,7 @@ fn main() {
 		.map(arrays.concat(it[0], ...it[1]))
 		.map(it.sorted())
 		.map(arrays.uniq_only_repeated(it).len)
-	println('Part 1: ${arrays.sum(part_1.filter(it != 0).map(1 << (it - 1)))!}')
+	println('Part 1: ${arrays.sum(part_1.filter(it != 0).map(int(1) << (it - 1)))!}')
 
 	mut counts := []int{len: lines.len, init: 1}
 	for i := 0; i < part_1.len; i++ {
