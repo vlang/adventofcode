@@ -11,7 +11,7 @@ fn create_inverse_map[T](arr []T) map[T]int {
 
 fn main() {
 	data := os.read_file('pages.input')!.split_into_lines()
-	split_index := arrays.index_of_first(data, fn (idx int, x string) bool {
+	split_index := arrays.index_of_first(data, fn (_ int, x string) bool {
 		return x == ''
 	})
 
@@ -59,28 +59,17 @@ fn main() {
 	mut total2 := 0
 	for update in incorect_updates {
 		sorted_update := update.sorted_with_compare(fn [rules] (a &int, b &int) int {
-			aa := *a
-			bb := *b
-			a_concerned_rules := rules.filter(it[0] == aa || it[1] == aa)
-			b_concerned_rules := rules.filter(it[0] == bb || it[1] == bb)
-
-			mut common_rules := [][2]int{}
-			for rule in a_concerned_rules {
-				if rule in b_concerned_rules {
-					common_rules << rule
+			page_a := *a
+			page_b := *b
+			for rule in rules {
+				if rule[0] == page_a && rule[1] == page_b {
+					return -1
+				}
+				if rule[0] == page_b && rule[1] == page_a {
+					return 1
 				}
 			}
-
-			if common_rules.len == 0 {
-				return 0
-			}
-
-			common_rule := common_rules[0]
-			if common_rule[0] == aa {
-				return -1
-			} else {
-				return 1
-			}
+			return 0
 		})
 
 		total2 += sorted_update[sorted_update.len / 2]
