@@ -6,7 +6,7 @@ fn main() {
 	mut total1 := i64(0)
 	mut total2 := i64(0)
 	for line in lines {
-		expected_str, value_str := line.split_once(': ') or { panic(err) }
+		expected_str, value_str := line.split_once(': ') or { panic('missing delimiter') }
 		expected := expected_str.i64()
 		values := value_str.split(' ').map(it.i64())
 
