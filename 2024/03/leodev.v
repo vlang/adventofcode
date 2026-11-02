@@ -7,7 +7,7 @@ fn main() {
 	mut re := regex.regex_opt(r'mul\(\d{1,3},\d{1,3}\)')!
 	mut total := 0
 	for value in re.find_all_str(content) {
-		a, b := value[4..value.len - 1].split_once(',') or { panic(err) }
+		a, b := value[4..value.len - 1].split_once(',') or { panic('missing delimiter') }
 		total += a.int() * b.int()
 	}
 
@@ -28,7 +28,7 @@ fn main() {
 			continue
 		}
 
-		a, b := content2[start + 4..end - 1].split_once(',') or { panic(err) }
+		a, b := content2[start + 4..end - 1].split_once(',') or { panic('missing delimiter') }
 		total2 += a.int() * b.int()
 	}
 

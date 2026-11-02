@@ -66,6 +66,7 @@ fn (mut fs FileSystem) update_parent_dir_size(size u32, parent usize) {
 	match mut parent_node {
 		DirNode {
 			parent_node.size += size
+			fs.nodes[parent] = parent_node
 
 			if grand_parent := parent_node.parent {
 				fs.update_parent_dir_size(size, grand_parent)
@@ -91,6 +92,7 @@ fn (mut fs FileSystem) add_node(node Node) {
 	match mut current_node {
 		DirNode {
 			current_node.children << usize(index)
+			fs.nodes[fs.current_node] = current_node
 		}
 		else {}
 	}

@@ -12,7 +12,7 @@ fn main() {
 			break
 		}
 
-		a, b := line.split_once('|') or { panic(err) }
+		a, b := line.split_once('|') or { panic('missing delimiter') }
 		rules[a.int()] << b.int()
 		rules2[b.int()] << a.int()
 	}

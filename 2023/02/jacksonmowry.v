@@ -17,10 +17,10 @@ fn main() {
 }
 
 fn part_2(input []string) !int {
-	return arrays.sum[int](input.map(it.split(': ')[1]).map(it.split_any(',;').map(it.trim_space().split(' '))).map(it.power()))
+	return arrays.sum[int](input.map(it.split(': ')[1]).map(it.split_any(',;').map(it.trim_space().split(' '))).map(power(it)))
 }
 
-fn (s [][]string) power() int {
+fn power(s [][]string) int {
 	mut arr := [1, 1, 1]
 	for hand in s {
 		num := hand[0].int()
